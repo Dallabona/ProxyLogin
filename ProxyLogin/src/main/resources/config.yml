@@ -1,0 +1,14 @@
+#Versão 1.0 do plugin ProxyLogin, sistema responsável pela autenticação de usuários através do proxy Bungeecord.
+
+# Please enter the address of your MySQL server.
+Host: 127.0.0.1
+# Please enter the port of your MySQL server.
+Port: '3306'
+# Please enter the username of your MySQL server.
+Username: root
+# Please enter the password of your MySQL server.
+Password: 'password'
+# Login server name PLEASE DO NOT PUT SAME SERVER AS "AFTER LOGIN SERVER"
+LoginServerName: AfterLoginLobby
+# After login server name PLEASE DO NOT PUT SAME SERVER AS "LOGIN SERVER".
+AfterLoginServerName: AfterLoginLobby
