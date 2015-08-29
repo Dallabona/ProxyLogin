@@ -13,8 +13,7 @@ public class ProxyLogin extends Plugin
 
 	private static ProxyLogin plugin;
 	
-	@Override
-	public void onEnable() 
+	@Override	public void onEnable() 
 	{
 		plugin = this;
 		//Mysql.setupMysql(mysqlIp, mysqlPort, mysqlDatabase, mysqlUsername, mysqlPassword);
