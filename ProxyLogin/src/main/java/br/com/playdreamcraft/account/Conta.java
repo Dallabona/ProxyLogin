@@ -5,11 +5,17 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 public class Conta 
 {	
 	
-	String password;
-	String name;
-	String email;
-	ProxiedPlayer proxyPlayer;
-	boolean logged;
+	private String password;
+	private String name;
+	private String email;
+	private String ip;
+	public String getIp()
+	{
+		return ip;
+	}
+
+	private ProxiedPlayer proxyPlayer;
+	private boolean logged;
 	
 	public Conta()
 	{

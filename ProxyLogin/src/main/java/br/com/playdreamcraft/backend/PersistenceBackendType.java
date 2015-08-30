@@ -1,6 +1,6 @@
 package br.com.playdreamcraft.backend;
 
-public enum PersistenceBackends
+public enum PersistenceBackendType
 {
 	MYSQL;
 }

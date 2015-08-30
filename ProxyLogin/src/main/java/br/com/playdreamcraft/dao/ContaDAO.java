@@ -38,16 +38,9 @@ public interface ContaDAO
 	public void alterarSenha(Conta conta) throws AccountNotFoundException;
 	
 	/**
-	 * Gera o pin da conta
+	 * Atualizar conta
 	 * @param conta Conta em questão
 	 * @throws AccountNotFoundException A conta pode não existir
 	 */
-	public void gerarPIN(Conta conta) throws AccountNotFoundException;
-	
-	/**
-	 * Adiciona um email para conta
-	 * @param conta
-	 * @throws AccountNotFoundException
-	 */
-	public void adicionarEmail(Conta conta) throws AccountNotFoundException;
+	public void atualizarConta(Conta conta) throws AccountNotFoundException;
 }
