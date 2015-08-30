@@ -1,4 +1,4 @@
-package br.com.playdreamcraft.backend;
+package br.com.playdreamcraft.cache;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -17,6 +17,12 @@ public class ContaDataManager implements ContaDAO
 		this.contaDAOcache = contaDAOcache;
 		this.contaDAOpersistence = contaDAOpersistence;
 	}
+	
+	public static ContaDataManager getInstance()
+	{
+		if()
+	}
+	
 	@Override
 	public void inserirConta(Conta conta)
 	{

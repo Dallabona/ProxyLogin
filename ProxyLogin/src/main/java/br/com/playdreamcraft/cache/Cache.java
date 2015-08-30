@@ -1,6 +1,7 @@
-package br.com.playdreamcraft.backend;
+package br.com.playdreamcraft.cache;
 
 import br.com.playdreamcraft.account.Conta;
+import br.com.playdreamcraft.backend.DataProvider;
 
 public interface Cache extends DataProvider
 {
