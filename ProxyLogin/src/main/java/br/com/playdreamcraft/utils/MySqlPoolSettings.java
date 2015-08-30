@@ -14,7 +14,7 @@ import com.zaxxer.hikari.HikariDataSource;
  * @author _LucasD
  * @see ProxyLogin
  */
-public class MySqlPoolSettings implements PersistenceBackendSetup
+public class MySqlPoolSettings 
 {
 
 	private static MySqlPoolSettings mysql;
