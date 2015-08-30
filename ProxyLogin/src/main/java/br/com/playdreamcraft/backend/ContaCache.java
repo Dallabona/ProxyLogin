@@ -13,7 +13,7 @@ import br.com.playdreamcraft.dao.ContaDAO;
  * @author _LucasD
  *
  */
-public class ContaCache implements Cache, ContaDao
+public class ContaCache implements Cache, ContaDAO
 {
 	private ContaDAO contaDAO;
 	private static Set<Conta> contas = new HashSet<>();
@@ -22,25 +22,8 @@ public class ContaCache implements Cache, ContaDao
 	private ContaCache()
 	{
 		
-	}	
-/*	
-	
-	@Override
-	public Conta getContaPorNome(String nome) throws AccountNotFoundException
-	{
-		Conta contaRetorno = null;
-		for (Conta conta : contas) 
-		{
-			if(conta == null)
-				contas.remove(conta);
-			if(conta.getName().equalsIgnoreCase(nome))
-				contaRetorno = conta;
-		}
-		if(contaRetorno == null)
-			throw new AccountNotFoundException();
-		return contaRetorno;
 	}
-*/
+
 	@Override
 	public void atualizarTodoCache()
 	{
@@ -63,11 +46,51 @@ public class ContaCache implements Cache, ContaDao
 	}
 
 	@Override
+	public void inserirConta(Conta conta)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Conta getContaPorNome(String nome) 
+	{
+		
+		return null;
+	}
+
+	@Override
+	public void deletarConta(Conta conta) throws AccountNotFoundException
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void alterarSenha(Conta conta) throws AccountNotFoundException
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void atualizarConta(Conta conta) throws AccountNotFoundException
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
 	public void atualizarTudo()
 	{
 		// TODO Auto-generated method stub
 		
 	}
+
+	
+	
+	
+
 
 
 }
