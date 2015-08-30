@@ -2,6 +2,7 @@ package br.com.playdreamcraft.backend;
 
 import br.com.playdreamcraft.Autenticavel;
 import br.com.playdreamcraft.Registravel;
+import br.com.playdreamcraft.dao.MySqlBackend;
 
 
 public class BackendManager implements Registravel, Autenticavel

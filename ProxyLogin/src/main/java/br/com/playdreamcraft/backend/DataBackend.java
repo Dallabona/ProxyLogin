@@ -6,5 +6,5 @@ import br.com.playdreamcraft.account.Conta;
 
 public interface DataBackend 
 {
-	public Conta getContaPorNome(String nome) throws AccountNotFoundException;	
+	
 }
