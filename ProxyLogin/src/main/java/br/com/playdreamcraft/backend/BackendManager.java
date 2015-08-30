@@ -13,7 +13,7 @@ public class BackendManager implements Registravel, Autenticavel
 	public BackendManager()
 	{
 		cache = ContaCache.getCache();
-		pBackend = 
+		
 	}
 
 	public enum BackendPersistenceType

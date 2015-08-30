@@ -2,7 +2,7 @@ package br.com.playdreamcraft.backend;
 
 
 
-public interface PersistenceBackend extends DataBackend
+public interface PersistenceBackend extends DataProvider
 {	
 	
 }

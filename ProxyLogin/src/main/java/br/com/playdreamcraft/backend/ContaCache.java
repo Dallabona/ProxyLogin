@@ -71,7 +71,7 @@ public class ContaCache implements DataBackend,Cache
 	public void atualizarUmaConta(Conta conta) throws AccountNotFoundException 
 	{
 		DataBackend db = (DataBackend) persistenceBackend;
-		db.getContaPorNome(conta.getName());
+		
 	}
 
 	/**

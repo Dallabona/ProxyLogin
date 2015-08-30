@@ -2,9 +2,7 @@ package br.com.playdreamcraft.backend;
 
 import br.com.playdreamcraft.account.Conta;
 
-public interface Cache extends DataBackend
+public interface Cache extends DataProvider
 {
-	public void atualizarTodoCache();
-	public void atualizarUmaConta(Conta conta);	
-	public Conta carregarConta(String nome);
+	
 }
