@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.security.auth.login.AccountNotFoundException;
 
 import br.com.playdreamcraft.account.Conta;
+import br.com.playdreamcraft.dao.ContaDAO;
 
 /**
  * Cache de contas
@@ -73,10 +74,16 @@ public class ContaCache implements DataBackend,Cache
 		db.getContaPorNome(conta.getName());
 	}
 
+	/**
+	 * Carregar conta em cache, caso não existir retorna null
+	 */
 	@Override
-	public void carregarConta(String nome)
+	public Conta carregarConta(String nome)
 	{
-		// TODO Auto-generated method stub
-		
+		ContaDAO contaDao = (ContaDAO) persistenceBackend;
+		Conta conta = contaDao.getContaPorNome(nome);
+		if(conta != null)
+			contas.add(conta);
+		return conta;
 	}
 }

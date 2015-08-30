@@ -1,11 +1,20 @@
 		Jogador entra
 			\/
+	ENVIAR PARA SERVIDOR DE AUTENTICAÇÃO
+			\/
 	Carregar a conta no cache
 			\/
-		conta registrada
-	   SIM      NÃO
-	   \ /      ----------------->
+		conta registrada ?                   |-------------------------------
+	   SIM      NÃO							\ /							    |
+	   \ /      ----------------->  PEDIR PARA REGISTRAR -> REGISTROU ? NÃO |
 		|
 		|
 	   \ /
 	    |
+   PEDIR PARA LOGAR
+       \/
+     LOGOU ?       
+      SIM
+      \/
+ ENVIAR SERVIDOR LOBBY
+     

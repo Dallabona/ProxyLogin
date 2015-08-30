@@ -6,5 +6,5 @@ public interface Cache extends DataBackend
 {
 	public void atualizarTodoCache();
 	public void atualizarUmaConta(Conta conta);	
-	public void carregarConta(String nome);
+	public Conta carregarConta(String nome);
 }

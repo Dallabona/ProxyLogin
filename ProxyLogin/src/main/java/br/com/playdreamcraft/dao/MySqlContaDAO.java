@@ -33,7 +33,7 @@ public class MySqlContaDAO implements ContaDAO, PersistenceBackend, DataBackend
 	}
 
 	@Override
-	public Conta contaPorNome(String nome)
+	public Conta getContaPorNome(String nome)
 	{
 		// TODO Auto-generated method stub
 		return null;
