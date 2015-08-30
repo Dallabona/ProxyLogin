@@ -8,19 +8,14 @@ import br.com.playdreamcraft.backend.PersistenceBackend;
 
 public class MySqlContaDAO implements ContaDAO, PersistenceBackend, DataBackend
 {
+	
+	public static final String INSERIR = "INSERT INTO accounts VALUES";
 
 	@Override
 	public void inserirConta(Conta conta)
 	{
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public Conta pegarConta(Conta conta)
-	{
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -35,6 +30,13 @@ public class MySqlContaDAO implements ContaDAO, PersistenceBackend, DataBackend
 	{
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Conta contaPorNome(String nome)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
