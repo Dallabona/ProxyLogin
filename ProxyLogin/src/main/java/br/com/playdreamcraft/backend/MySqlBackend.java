@@ -4,7 +4,7 @@ import javax.security.auth.login.AccountNotFoundException;
 
 import br.com.playdreamcraft.account.Conta;
 
-public class MySqlBackend implements DataBackend, PercistenciaBackend
+public class MySqlBackend implements DataBackend, PersistenceBackend
 {
 	
 	
@@ -23,7 +23,7 @@ public class MySqlBackend implements DataBackend, PercistenciaBackend
 	}
 
 	@Override
-	public PercistenciaBackend getPercistenciaBackend()
+	public PersistenceBackend getPercistenciaBackend()
 	{
 		// TODO Auto-generated method stub
 		return null;

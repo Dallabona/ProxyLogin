@@ -1,6 +1,6 @@
 package br.com.playdreamcraft.backend;
 
-public interface PercistenciaBackendSetup 
+public interface PersistenceBackendSetup 
 {
 	public void setupBackend();
 }

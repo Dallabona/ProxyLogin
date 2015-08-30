@@ -14,7 +14,7 @@ import br.com.playdreamcraft.account.Conta;
  */
 public class ContaCache implements DataBackend,Cache
 {
-	private PercistenciaBackend percistenciaBackend;
+	private PersistenceBackend persistenceBackend;
 	private static Set<Conta> contas = new HashSet<>();
 	private static ContaCache contaCache;
 	
@@ -69,7 +69,7 @@ public class ContaCache implements DataBackend,Cache
 	@Override
 	public void atualizarUmaConta(Conta conta) throws AccountNotFoundException 
 	{
-		DataBackend db = (DataBackend) percistenciaBackend;
-		contas. db.getContaPorNome(conta.getName());
+		DataBackend db = (DataBackend) persistenceBackend;
+		db.getContaPorNome(conta.getName());
 	}
 }

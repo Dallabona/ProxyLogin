@@ -3,7 +3,7 @@ package br.com.playdreamcraft.utils;
 import java.sql.SQLException;
 
 import br.com.playdreamcraft.ProxyLogin;
-import br.com.playdreamcraft.backend.PercistenciaBackendSetup;
+import br.com.playdreamcraft.backend.PersistenceBackendSetup;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -14,7 +14,7 @@ import com.zaxxer.hikari.HikariDataSource;
  * @author _LucasD
  * @see ProxyLogin
  */
-public class MySqlPoolSettings implements PercistenciaBackendSetup
+public class MySqlPoolSettings implements PersistenceBackendSetup
 {
 
 	private static MySqlPoolSettings mysql;

@@ -1,12 +1,13 @@
 package br.com.playdreamcraft.backend;
 
+import br.com.playdreamcraft.Autenticavel;
 import br.com.playdreamcraft.Registravel;
 
 
 public class BackendManager implements Registravel, Autenticavel
 {
 	private Cache cache;
-	private PercistenciaBackend pBackend;
+	private PersistenceBackend pBackend;
 	
 	public BackendManager()
 	{
@@ -14,4 +15,17 @@ public class BackendManager implements Registravel, Autenticavel
 		pBackend = 
 	}
 
+	public enum BackendPersistenceType
+	{
+		MYSQL;
+	}
+	
+	private PersistenceBackend getBackendPersistence(BackendPersistenceType bp)
+	{
+		if(bp == BackendPersistenceType.MYSQL)
+			return new MySqlBackend();
+			
+		return null;
+	}
+	
 }
