@@ -5,7 +5,6 @@ import javax.security.auth.login.AccountNotFoundException;
 
 import br.com.playdreamcraft.account.Conta;
 import br.com.playdreamcraft.backend.Cache;
-import br.com.playdreamcraft.backend.DataBackend;
 import br.com.playdreamcraft.backend.PersistenceBackend;
 
 
@@ -36,27 +35,13 @@ public class MySqlContaDAO implements ContaDAO
 	}
 
 	@Override
-	public void atualizarTodoCache()
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void atualizarUmaConta(Conta conta)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Conta carregarConta(String nome)
+	public Conta getContaPorNome(String nome) throws AccountNotFoundException
 	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-
+	
 
 	
 	

@@ -6,14 +6,22 @@ import br.com.playdreamcraft.account.Conta;
 import br.com.playdreamcraft.backend.Cache;
 import br.com.playdreamcraft.backend.PersistenceBackend;
 
-public interface ContaDAO extends PersistenceBackend
+public interface ContaDAO
 {
 	/**
 	 * Persiste uma conta
 	 * @param conta Conta a ser persistida
 	 */
-	public void inserirConta(Conta conta);	
-
+	public void inserirConta(Conta conta);
+	
+	/**
+	 * Recupera uma conta já persistida pelo nome
+	 * @param nome Nome da conta
+	 * @return Retorna a conta
+	 * @throws AccountNotFoundException A conta pode nao existir
+	 */
+	public Conta getContaPorNome(String nome) throws AccountNotFoundException;	
+	
 	
 	/**
 	 * Deleta uma conta dos registros
@@ -28,4 +36,18 @@ public interface ContaDAO extends PersistenceBackend
 	 * @throws AccountNotFoundException A conta pode nao existir
 	 */
 	public void alterarSenha(Conta conta) throws AccountNotFoundException;
+	
+	/**
+	 * Gera o pin da conta
+	 * @param conta Conta em questão
+	 * @throws AccountNotFoundException A conta pode não existir
+	 */
+	public void gerarPIN(Conta conta) throws AccountNotFoundException;
+	
+	/**
+	 * Adiciona um email para conta
+	 * @param conta
+	 * @throws AccountNotFoundException
+	 */
+	public void adicionarEmail(Conta conta) throws AccountNotFoundException;
 }

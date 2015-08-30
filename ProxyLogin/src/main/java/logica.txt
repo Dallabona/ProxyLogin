@@ -18,3 +18,12 @@
       \/
  ENVIAR SERVIDOR LOBBY
      
+     
+     
+     
+     
+     CACHE
+     
+     getContaPorNome()  ----> Conta cache 
+     							TEM NO CACHE Não ----> 
+     							Sim      

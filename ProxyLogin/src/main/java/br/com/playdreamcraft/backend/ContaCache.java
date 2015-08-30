@@ -13,35 +13,18 @@ import br.com.playdreamcraft.dao.ContaDAO;
  * @author _LucasD
  *
  */
-public class ContaCache implements DataBackend,Cache
+public class ContaCache implements Cache, ContaDao
 {
-	private PersistenceBackend persistenceBackend;
+	private ContaDAO contaDAO;
 	private static Set<Conta> contas = new HashSet<>();
 	private static ContaCache contaCache;
 	
 	private ContaCache()
 	{
 		
-	}
+	}	
+/*	
 	
-	/**
-	 * Recuperar instância de ContaCache
-	 * @return Instância unitária da classe ContaCache
-	 */
-	@Override
-	public static Cache getCache()
-	{
-		if(contaCache == null)
-			contaCache = new ContaCache();
-		
-		return contaCache;
-	}
-	
-	/**
-	 * Recupera objeto conta por um nome
-	 * @return Instância da conta
-	 * @exception Conta nao encontrada
-	 */
 	@Override
 	public Conta getContaPorNome(String nome) throws AccountNotFoundException
 	{
@@ -57,33 +40,34 @@ public class ContaCache implements DataBackend,Cache
 			throw new AccountNotFoundException();
 		return contaRetorno;
 	}
-
+*/
 	@Override
-	public void atualizarTodoCache() 
-	{		
+	public void atualizarTodoCache()
+	{
+		// TODO Auto-generated method stub
 		
 	}
 
-	/**
-	 * Atualiza uma conta que esta no cache
-	 */
 	@Override
-	public void atualizarUmaConta(Conta conta) throws AccountNotFoundException 
+	public void atualizarUmaConta(Conta conta)
 	{
-		DataBackend db = (DataBackend) persistenceBackend;
+		// TODO Auto-generated method stub
 		
 	}
 
-	/**
-	 * Carregar conta em cache, caso não existir retorna null
-	 */
 	@Override
-	public Conta carregarConta(String nome)
+	public Conta carregarConta(String nome) throws AccountNotFoundException
 	{
-		ContaDAO contaDao = (ContaDAO) persistenceBackend;
-		Conta conta = contaDao.getContaPorNome(nome);
-		if(conta != null)
-			contas.add(conta);
-		return conta;
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+	@Override
+	public void atualizarTudo()
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+
 }
