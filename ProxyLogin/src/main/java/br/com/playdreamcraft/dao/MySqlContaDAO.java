@@ -22,6 +22,20 @@ public class MySqlContaDAO implements ContaDAO, PersistenceBackend, DataBackend
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void deletarConta(Conta conta)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void alterarSenha(Conta conta)
+	{
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 

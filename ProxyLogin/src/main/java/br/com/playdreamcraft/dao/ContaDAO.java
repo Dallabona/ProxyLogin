@@ -6,4 +6,6 @@ public interface ContaDAO
 {
 	public void inserirConta(Conta conta);
 	public Conta pegarConta(Conta conta);
+	public void deletarConta(Conta conta);
+	public void alterarSenha(Conta conta);
 }
