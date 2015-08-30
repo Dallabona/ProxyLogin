@@ -1,3 +1,11 @@
-Jogador entra
-
-Carrega a conta no cache
+		Jogador entra
+			\/
+	Carregar a conta no cache
+			\/
+		conta registrada
+	   SIM      NÃO
+	   \ /      ----------------->
+		|
+		|
+	   \ /
+	    |

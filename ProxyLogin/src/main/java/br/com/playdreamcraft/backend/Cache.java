@@ -5,5 +5,6 @@ import br.com.playdreamcraft.account.Conta;
 public interface Cache extends DataBackend
 {
 	public void atualizarTodoCache();
-	public void atualizarUmaConta(Conta conta) ;	
+	public void atualizarUmaConta(Conta conta);	
+	public void carregarConta(String nome);
 }

@@ -72,4 +72,11 @@ public class ContaCache implements DataBackend,Cache
 		DataBackend db = (DataBackend) persistenceBackend;
 		db.getContaPorNome(conta.getName());
 	}
+
+	@Override
+	public void carregarConta(String nome)
+	{
+		// TODO Auto-generated method stub
+		
+	}
 }
