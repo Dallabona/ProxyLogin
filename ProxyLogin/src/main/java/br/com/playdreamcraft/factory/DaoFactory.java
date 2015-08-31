@@ -9,7 +9,7 @@ public class DaoFactory
 {
 	public static ContaDAO getPersistenceContaDAO(PersistenceBackendType pBack)
 	{
-		if(pBack == PersistenceBackendType.MYSQL)
+		if(PersistenceBackendType.getPersistenciaselecionada() == PersistenceBackendType.MYSQL)
 			return new MySqlContaDAO();
 		
 		return null;

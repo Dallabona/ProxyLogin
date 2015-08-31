@@ -5,9 +5,9 @@ import br.com.playdreamcraft.config.ConfigManager;
 public enum PersistenceBackendType
 {	
 	
-	MYSQL, SQLLITE;	
+	MYSQL;	
 	
-	private final static PersistenceBackendType persistenciaSelecionada ;//= PersistenceBackendType.MYSQL;
+	private final static PersistenceBackendType persistenciaSelecionada ;;
 	
 	static
 	{

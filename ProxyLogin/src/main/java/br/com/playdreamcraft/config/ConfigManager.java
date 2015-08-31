@@ -23,4 +23,10 @@ public class ConfigManager
 		//TODO
 		return null;
 	}
+
+	public String getCache()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
