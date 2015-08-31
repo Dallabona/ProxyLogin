@@ -6,7 +6,7 @@ import br.com.playdreamcraft.cache.ContaCache;
 import br.com.playdreamcraft.dao.ContaDAO;
 import br.com.playdreamcraft.dao.MySqlContaDAO;
 
-public class DaoFactory
+public class DAOFactory
 {
 	public static ContaDAO getPersistenceContaDAO()
 	{

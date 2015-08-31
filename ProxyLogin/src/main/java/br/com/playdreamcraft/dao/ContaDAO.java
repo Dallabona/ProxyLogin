@@ -28,14 +28,8 @@ public interface ContaDAO
 	 * @param conta Conta a ser deletada
 	 * @throws AccountNotFoundException A conta pode nao existir
 	 */
-	public void deletarConta(Conta conta)throws AccountNotFoundException;
+	public void deletarConta(Conta conta)throws AccountNotFoundException;	
 	
-	/**
-	 * Aterar 
-	 * @param conta 
-	 * @throws AccountNotFoundException A conta pode nao existir
-	 */
-	public void alterarSenha(Conta conta) throws AccountNotFoundException;
 	
 	/**
 	 * Atualizar conta

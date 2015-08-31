@@ -3,7 +3,7 @@ package br.com.playdreamcraft.account;
 import javax.security.auth.login.AccountNotFoundException;
 
 import br.com.playdreamcraft.dao.ContaDAO;
-import br.com.playdreamcraft.factory.DaoFactory;
+import br.com.playdreamcraft.factory.DAOFactory;
 
 public class ContaDataManager implements ContaDAO
 {
@@ -21,7 +21,7 @@ public class ContaDataManager implements ContaDAO
 	public static ContaDataManager getInstance()
 	{
 		if(singleton == null)
-			singleton = new ContaDataManager(DaoFactory.getCacheContaDAO(), DaoFactory.getPersistenceContaDAO());
+			singleton = new ContaDataManager(DAOFactory.getCacheContaDAO(), DAOFactory.getPersistenceContaDAO());
 		
 		return singleton;
 	}
@@ -44,6 +44,7 @@ public class ContaDataManager implements ContaDAO
 	
 		conta = contaDAOpersistence.getContaPorNome(nome);
 		
+		
 		return conta;
 	}
 
@@ -55,17 +56,9 @@ public class ContaDataManager implements ContaDAO
 	}
 
 	@Override
-	public void alterarSenha(Conta conta) throws AccountNotFoundException
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void atualizarConta(Conta conta) throws AccountNotFoundException
 	{
-		// TODO Auto-generated method stub
-		
+		contaDAOpersistence.atualizarConta(conta);		
 	}
 	
 	
