@@ -3,8 +3,6 @@ package br.com.playdreamcraft.dao;
 import javax.security.auth.login.AccountNotFoundException;
 
 import br.com.playdreamcraft.account.Conta;
-import br.com.playdreamcraft.backend.PersistenceBackend;
-import br.com.playdreamcraft.cache.Cache;
 
 public interface ContaDAO
 {

@@ -1,7 +1,10 @@
 package br.com.playdreamcraft.account;
 
+import javax.management.RuntimeErrorException;
 import javax.security.auth.login.AccountNotFoundException;
 
+import br.com.playdreamcraft.backend.PersistenceBackend;
+import br.com.playdreamcraft.cache.ContaCache;
 import br.com.playdreamcraft.dao.ContaDAO;
 import br.com.playdreamcraft.factory.DAOFactory;
 
@@ -14,6 +17,9 @@ public class ContaDataManager implements ContaDAO
 	
 	private ContaDataManager(ContaDAO contaDAOcache, ContaDAO contaDAOpersistence)
 	{
+		if(!(contaDAOcache instanceof ContaCache) || !(contaDAOpersistence instanceof PersistenceBackend))
+			throw new RuntimeException("Algum problema ocorreu, provavelmente com o cache ou com a persistencia de dados");
+		
 		this.contaDAOcache = contaDAOcache;
 		this.contaDAOpersistence = contaDAOpersistence;
 	}

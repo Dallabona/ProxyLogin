@@ -4,7 +4,7 @@ import javax.security.auth.login.AccountNotFoundException;
 
 import br.com.playdreamcraft.account.Conta;
 import br.com.playdreamcraft.backend.PersistenceBackend;
-import br.com.playdreamcraft.cache.Cache;
+import br.com.playdreamcraft.cache.ContaCache;
 
 public class MySqlContaDAO implements ContaDAO
 {
