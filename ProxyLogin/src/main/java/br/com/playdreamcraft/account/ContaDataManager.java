@@ -3,6 +3,7 @@ package br.com.playdreamcraft.account;
 import javax.security.auth.login.AccountNotFoundException;
 
 import br.com.playdreamcraft.dao.ContaDAO;
+import br.com.playdreamcraft.factory.DaoFactory;
 
 public class ContaDataManager implements ContaDAO
 {
@@ -20,7 +21,9 @@ public class ContaDataManager implements ContaDAO
 	public static ContaDataManager getInstance()
 	{
 		if(singleton == null)
-			singleton = new ContaDataManager(contaDAOcache, contaDAOpersistence)
+			singleton = new ContaDataManager(DaoFactory.getCacheContaDAO(), DaoFactory.getPersistenceContaDAO());
+		
+		return singleton;
 	}
 	
 	@Override

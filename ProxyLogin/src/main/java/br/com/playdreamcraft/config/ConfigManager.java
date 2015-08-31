@@ -1,6 +1,5 @@
 package br.com.playdreamcraft.config;
 
-import java.lang.invoke.SwitchPoint;
 
 public class ConfigManager
 {

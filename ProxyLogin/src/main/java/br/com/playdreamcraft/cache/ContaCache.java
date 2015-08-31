@@ -10,6 +10,7 @@ import br.com.playdreamcraft.dao.ContaDAO;
 
 /**
  * Cache de contas
+ * 
  * @author _LucasD
  *
  */
@@ -18,24 +19,33 @@ public class ContaCache implements Cache, ContaDAO
 	private ContaDAO contaDAO;
 	private static Set<Conta> contas = new HashSet<>();
 	private static ContaCache contaCache;
-	
+
+	private static ContaCache instance;
+
 	private ContaCache()
 	{
-		
+	}
+
+	public static ContaCache getInstance()
+	{
+		if(null == instance)
+			instance = new ContaCache();
+
+		return instance;
 	}
 
 	@Override
 	public void atualizarTodoCache()
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void atualizarUmaConta(Conta conta)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -49,13 +59,13 @@ public class ContaCache implements Cache, ContaDAO
 	public void inserirConta(Conta conta)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public Conta getContaPorNome(String nome) 
+	public Conta getContaPorNome(String nome)
 	{
-		
+
 		return null;
 	}
 
@@ -63,34 +73,28 @@ public class ContaCache implements Cache, ContaDAO
 	public void deletarConta(Conta conta) throws AccountNotFoundException
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void alterarSenha(Conta conta) throws AccountNotFoundException
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void atualizarConta(Conta conta) throws AccountNotFoundException
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void atualizarTudo()
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
-
-	
-	
-	
-
-
 
 }
