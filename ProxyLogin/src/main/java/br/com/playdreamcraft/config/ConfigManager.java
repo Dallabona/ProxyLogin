@@ -18,5 +18,9 @@ public class ConfigManager
 		return instance;
 	}
 	
-	public 
+	public String getPersistence()
+	{
+		//TODO
+		return null;
+	}
 }
