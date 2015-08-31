@@ -1,4 +1,4 @@
-package br.com.playdreamcraft.utils;
+package br.com.playdreamcraft.config;
 
 import java.io.File;
 import java.io.IOException;

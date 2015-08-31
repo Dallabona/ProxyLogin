@@ -1,8 +1,7 @@
-package br.com.playdreamcraft.backend;
+package br.com.playdreamcraft.account;
 
 import javax.security.auth.login.AccountNotFoundException;
 
-import br.com.playdreamcraft.account.Conta;
 import br.com.playdreamcraft.dao.ContaDAO;
 
 public class ContaDataManager implements ContaDAO
@@ -20,7 +19,8 @@ public class ContaDataManager implements ContaDAO
 	
 	public static ContaDataManager getInstance()
 	{
-		if()
+		if(singleton == null)
+			singleton = new ContaDataManager(contaDAOcache, contaDAOpersistence)
 	}
 	
 	@Override
