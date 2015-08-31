@@ -49,7 +49,8 @@ public class ContaDataManager implements ContaDAO
 			return conta;
 	
 		conta = contaDAOpersistence.getContaPorNome(nome);
-		
+		ContaCache contaCache = (ContaCache) contaDAOcache;
+		contaCache.carregarConta(conta);
 		
 		return conta;
 	}

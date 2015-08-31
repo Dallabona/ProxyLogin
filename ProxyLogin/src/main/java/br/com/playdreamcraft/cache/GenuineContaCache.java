@@ -34,26 +34,6 @@ public class GenuineContaCache implements ContaCache, ContaDAO
 		return instance;
 	}
 
-	@Override
-	public void atualizarTodoCache()
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void atualizarUmaConta(Conta conta)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Conta carregarConta(String nome) throws AccountNotFoundException
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public void inserirConta(Conta conta)
