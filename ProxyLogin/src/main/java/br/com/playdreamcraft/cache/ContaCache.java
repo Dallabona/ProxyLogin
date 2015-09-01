@@ -9,4 +9,5 @@ public interface ContaCache extends DataProvider
 	public void atualizarTodasContas();
 	public void atualizarConta(Conta conta);
 	public void carregarConta(Conta conta);	
+	public void removerUmaConta(Conta conta);
 }

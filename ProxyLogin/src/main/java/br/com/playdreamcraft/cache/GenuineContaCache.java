@@ -77,6 +77,13 @@ public class GenuineContaCache implements ContaCache, ContaDAO
 		
 	}
 
+	@Override
+	public void removerUmaConta(Conta conta)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 	

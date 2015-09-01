@@ -1,6 +1,5 @@
 package br.com.playdreamcraft.account;
 
-import javax.management.RuntimeErrorException;
 import javax.security.auth.login.AccountNotFoundException;
 
 import br.com.playdreamcraft.backend.PersistenceBackend;
@@ -57,8 +56,8 @@ public class ContaDataManager implements ContaDAO
 
 	@Override
 	public void deletarConta(Conta conta) throws AccountNotFoundException
-	{
-		// TODO Auto-generated method stub
+	{		
+		contaDAOpersistence.deletarConta(conta);
 		
 	}
 
