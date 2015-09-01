@@ -29,21 +29,7 @@ public class MySqlContaDAO implements ContaDAO
 	public void inserirConta(Conta conta)
 	{
 		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void deletarConta(Conta conta) throws AccountNotFoundException
-	{
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void alterarSenha(Conta conta) throws AccountNotFoundException
-	{
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
@@ -52,5 +38,21 @@ public class MySqlContaDAO implements ContaDAO
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void deletarConta(Conta conta) throws AccountNotFoundException
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void atualizarConta(Conta conta) throws AccountNotFoundException
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+
 
 }
