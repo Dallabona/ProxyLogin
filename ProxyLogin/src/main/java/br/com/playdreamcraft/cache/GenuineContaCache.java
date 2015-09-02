@@ -1,7 +1,8 @@
 package br.com.playdreamcraft.cache;
 
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.security.auth.login.AccountNotFoundException;
 
@@ -17,7 +18,7 @@ import br.com.playdreamcraft.dao.ContaDAO;
 public class GenuineContaCache implements ContaCache, ContaDAO
 {
 	private ContaDAO contaDAO;
-	private static Set<Conta> contas = new HashSet<>();
+	private static Set<Conta> contas = Collections.newSetFromMap(new ConcurrentHashMap<Conta,Boolean>());
 	private static GenuineContaCache contaCache;
 
 	private static GenuineContaCache instance;
