@@ -1,6 +1,6 @@
 package br.com.playdreacraft.proxylogin.tests;
 
-import br.com.playdreamcraft.backend.DataProviderException;
+import br.com.playdreamcraft.proxylogin.backend.DataProviderException;
 
 public class DataProviderExceptionTest
 {

@@ -5,7 +5,7 @@ package br.com.playdreacraft.proxylogin.tests;
 import org.junit.Assert;
 import org.junit.Test;
 
-import br.com.playdreamcraft.backend.PersistenceBackendType;
+import br.com.playdreamcraft.proxylogin.backend.PersistenceBackendType;
 
 public class PersistenceBackendTypeTeste
 {

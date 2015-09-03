@@ -1,6 +1,6 @@
 package br.com.playdreacraft.proxylogin.tests;
 
-import br.com.playdreamcraft.account.Conta;
+import br.com.playdreamcraft.proxylogin.account.Conta;
 
 public class ContaTest
 {
