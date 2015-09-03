@@ -44,7 +44,7 @@ public class GenuineContaCache implements ContaCache, ContaDAO
 	}
 
 	@Override
-	public Conta getContaPorNome(String nome) throws AccountNotFoundException
+	public Conta getContaPorNome(String nome)  //se nao existir retornar null
 	{
 		// TODO Auto-generated method stub
 		return null;

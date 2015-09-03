@@ -33,17 +33,17 @@ public class ContaDataManager implements ContaDAO
 	}
 	
 	@Override
-	public void inserirConta(Conta conta)
-	{
-		contaDAOcache.inserirConta(conta);
-		contaDAOpersistence.inserirConta(conta);
+	public void inserirConta(Conta conta) throws DataProviderException 
+	{		
+		contaDAOpersistence.inserirConta(conta);		
+		contaDAOcache.inserirConta(conta);		
 	}
 
 	@Override
-	public Conta getContaPorNome(String nome) throws AccountNotFoundException
+	public Conta getContaPorNome(String nome) throws AccountNotFoundException, DataProviderException
 	{
 		Conta conta;
-		conta.
+		
 		conta = contaDAOcache.getContaPorNome(nome);
 		if(conta != null)
 			return conta;
@@ -56,35 +56,31 @@ public class ContaDataManager implements ContaDAO
 	}
 
 	@Override
-	public void deletarConta(Conta conta) throws AccountNotFoundException
+	public void deletarConta(Conta conta) throws AccountNotFoundException, DataProviderException
 	{				
-		contaDAOpersistence.deletarConta(conta);
-		
+		 contaDAOpersistence.deletarConta(conta);		
+		 contaDAOcache.deletarConta(conta);
 	}
 
 	@Override
 	public void atualizarConta(Conta conta) throws AccountNotFoundException, DataProviderException
 	{
+		ContaCache cache = (ContaCache) contaDAOcache;
 		String nomeConta = conta.getName();
 		Conta contaRollback = null; 
 		try
 		{
 			contaDAOpersistence.atualizarConta(conta);
 		}catch (DataProviderException e) //caso acontece algum erro em guardar uma conta
-		{
-			
-				contaRollback = contaDAOpersistence.getContaPorNome(nomeConta);
-			}catch (DataProviderException e1)
-			{
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+		{		
+			contaRollback = contaDAOpersistence.getContaPorNome(nomeConta);
 			e.printStackTrace();
 		}	
 		
-		if(contaRollback !=null)
+		if(contaRollback != null)
 		{
 			contaDAOcache.deletarConta(conta);
+			cache.carregarConta(contaRollback);
 		}
 	}
 	
