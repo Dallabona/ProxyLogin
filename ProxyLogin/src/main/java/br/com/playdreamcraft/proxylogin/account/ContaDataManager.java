@@ -2,6 +2,7 @@ package br.com.playdreamcraft.proxylogin.account;
 
 import javax.security.auth.login.AccountNotFoundException;
 
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 import br.com.playdreamcraft.proxylogin.backend.DataProviderException;
 import br.com.playdreamcraft.proxylogin.backend.PersistenceBackend;
 import br.com.playdreamcraft.proxylogin.cache.ContaCache;
@@ -53,6 +54,14 @@ public class ContaDataManager implements ContaDAO
 		
 		return conta;
 	}
+	
+	@Override
+	public Conta getContaPorProxiedPlayer(ProxiedPlayer pp)
+			throws AccountNotFoundException, DataProviderException
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public void deletarConta(Conta conta) throws AccountNotFoundException, DataProviderException
@@ -80,7 +89,6 @@ public class ContaDataManager implements ContaDAO
 			contaDAOcache.deletarConta(conta);
 			contaDAOcache.inserirConta(contaRollback);
 		}
-	}
-	
+	}	
 	
 }

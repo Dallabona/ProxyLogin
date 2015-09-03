@@ -1,5 +1,6 @@
 package br.com.playdreamcraft.proxylogin.account;
 
+import br.com.playdreamcraft.proxylogin.ProxyLogin;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class Conta
@@ -8,26 +9,23 @@ public class Conta
 	private String name;
 	private String password;
 	private String email;
-	private String ip;	
 
-	private ProxiedPlayer proxyPlayer;
+	private ProxiedPlayer proxiedPlayer;
 	private boolean logged;
 	
 	public Conta(String name, String email, String password)
 	{
-		this.ip = ip;
+		this.proxiedPlayer = ProxyLogin.getInstance().getProxy().getPlayer(name);			
 		this.email = email;
 		this.password = password;
-		this.name = name;
-		
+		this.name = name;		
 	}
 	
 	public Conta(ProxiedPlayer pp, String email, String password)
 	{
-		name = pp.getName().toLowerCase();
-		ip = pp.getAddress().getHostName();
+		name = pp.getName().toLowerCase();		
 		this.email = email;
-		proxyPlayer = pp;
+		proxiedPlayer = pp;
 	}
 	
 	public String getPassword()
@@ -57,12 +55,7 @@ public class Conta
 
 	public ProxiedPlayer getProxyPlayer() 
 	{
-		return proxyPlayer;
+		return proxiedPlayer;
 	}	
-	
-	public String getIp()
-	{
-		return ip;
-	}
-
+		
 }

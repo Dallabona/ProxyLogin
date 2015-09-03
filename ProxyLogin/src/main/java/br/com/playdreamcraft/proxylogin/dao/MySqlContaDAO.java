@@ -56,24 +56,20 @@ public class MySqlContaDAO implements ContaDAO
 					rs = ps.executeQuery();
 					
 					if(rs.next())
-					{
-						rs.getString("password");
-						rs.getString("email");
+					{						
+						String password = rs.getString("password");
+						String email = rs.getString("email");
+						contaRetorno = new Conta(nome, email, password);
 					}else
 					  throw new AccountNotFoundException();	
-				}catch (SQLException e)
+				}catch (SQLException sqle)
 				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}catch (Exception e)
+					throw new DataProviderException("Mysql problem " + sqle.getMessage());
+				}catch (Exception ex)
 				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					throw new DataProviderException("Mysql problem " + ex.getMessage());
 				}							
-					
-			if(contaRetorno == null)
-				throw new AccountNotFoundException();
-				
+							
 		return contaRetorno;
 	}
 
