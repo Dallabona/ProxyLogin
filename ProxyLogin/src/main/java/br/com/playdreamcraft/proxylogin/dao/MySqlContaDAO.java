@@ -40,36 +40,38 @@ public class MySqlContaDAO implements ContaDAO
 	}
 
 	@Override
-	public Conta getContaPorNome(String nome) throws AccountNotFoundException, DataProviderException
+	public Conta getContaPorNome(String nome) throws AccountNotFoundException,
+			DataProviderException
 	{
 		Conta contaRetorno = null;
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-			
-				try
-				{
-					con = MySqlPoolSettings.getMYSQL().getPool().getConnection();					
 
-					ps = con.prepareStatement(SELECIONAR);
-					ps.setString(1, nome.toLowerCase());
-					rs = ps.executeQuery();
-					
-					if(rs.next())
-					{						
-						String password = rs.getString("password");
-						String email = rs.getString("email");
-						contaRetorno = new Conta(nome, email, password);
-					}else
-					  throw new AccountNotFoundException();	
-				}catch (SQLException sqle)
-				{
-					throw new DataProviderException("Mysql problem " + sqle.getMessage());
-				}catch (Exception ex)
-				{
-					throw new DataProviderException("Mysql problem " + ex.getMessage());
-				}							
-							
+		try
+		{
+			con = MySqlPoolSettings.getMYSQL().getPool().getConnection();
+
+			ps = con.prepareStatement(SELECIONAR);
+			ps.setString(1, nome.toLowerCase());
+			rs = ps.executeQuery();
+
+			if(rs.next())
+			{
+				String password = rs.getString("password");
+				String email = rs.getString("email");
+				contaRetorno = new Conta(nome, email, password);
+			}else
+				throw new AccountNotFoundException();
+		}catch (SQLException sqle)
+		{
+			throw new DataProviderException("Mysql problem "
+					+ sqle.getMessage());
+		}catch (Exception ex)
+		{
+			throw new DataProviderException("Mysql problem " + ex.getMessage());
+		}
+
 		return contaRetorno;
 	}
 
@@ -77,10 +79,39 @@ public class MySqlContaDAO implements ContaDAO
 	public Conta getContaPorProxiedPlayer(ProxiedPlayer pp)
 			throws AccountNotFoundException, DataProviderException
 	{
-		
-		return null;
+		Conta contaRetorno = null;
+		String nome = pp.getName();		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try
+		{
+			con = MySqlPoolSettings.getMYSQL().getPool().getConnection();
+
+			ps = con.prepareStatement(SELECIONAR);
+			ps.setString(1, nome.toLowerCase());
+			rs = ps.executeQuery();
+
+			if(rs.next())
+			{
+				String password = rs.getString("password");
+				String email = rs.getString("email");
+				contaRetorno = new Conta(pp, email, password);
+			}else
+				throw new AccountNotFoundException();
+		}catch (SQLException sqle)
+		{
+			throw new DataProviderException("Mysql problem "
+					+ sqle.getMessage());
+		}catch (Exception ex)
+		{
+			throw new DataProviderException("Mysql problem " + ex.getMessage());
+		}
+
+		return contaRetorno;
 	}
-	
+
 	@Override
 	public void deletarConta(Conta conta) throws DataProviderException
 	{
@@ -146,5 +177,5 @@ public class MySqlContaDAO implements ContaDAO
 				e.printStackTrace();
 			}
 	}
-	
+
 }
