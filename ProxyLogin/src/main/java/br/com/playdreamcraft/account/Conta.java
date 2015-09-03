@@ -2,7 +2,7 @@ package br.com.playdreamcraft.account;
 
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
-public class Conta 
+public class Conta
 {	
 	
 	private String password;
@@ -17,9 +17,9 @@ public class Conta
 	private ProxiedPlayer proxyPlayer;
 	private boolean logged;
 	
-	public Conta()
+	public Conta(String ip)
 	{
-		
+		this.ip = ip;
 	}
 	
 	public String getPassword()
@@ -50,5 +50,6 @@ public class Conta
 	public ProxiedPlayer getProxyPlayer() 
 	{
 		return proxyPlayer;
-	}
+	}	
+
 }
