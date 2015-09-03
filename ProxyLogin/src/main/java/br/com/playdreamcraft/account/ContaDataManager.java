@@ -42,7 +42,7 @@ public class ContaDataManager implements ContaDAO
 	public Conta getContaPorNome(String nome) throws AccountNotFoundException
 	{
 		Conta conta;
-		
+		conta.
 		conta = contaDAOcache.getContaPorNome(nome);
 		if(conta != null)
 			return conta;
@@ -56,7 +56,7 @@ public class ContaDataManager implements ContaDAO
 
 	@Override
 	public void deletarConta(Conta conta) throws AccountNotFoundException
-	{		
+	{				
 		contaDAOpersistence.deletarConta(conta);
 		
 	}
