@@ -15,6 +15,7 @@ public class MySqlContaDAO implements ContaDAO
 {
 
 	public static final String DELETAR = "DELETE FROM accounts WHERE name = ?";
+	public static final String SELECIONAR = "SELECT * FROM accounts where name = ?";
 
 	private static MySqlContaDAO instance;
 
@@ -40,7 +41,37 @@ public class MySqlContaDAO implements ContaDAO
 	@Override
 	public Conta getContaPorNome(String nome) throws AccountNotFoundException, DataProviderException
 	{
-		// TODO Auto-generated method stub
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+			
+				try
+				{
+					con = MySqlPoolSettings.getMYSQL().getPool().getConnection();					
+
+					ps = con.prepareStatement(SELECIONAR);
+					ps.setString(1, nome);
+					rs = ps.executeQuery();
+					
+					if(rs.next())
+					{
+						rs.get
+					}else
+					  throw new AccountNotFoundException();	
+				}catch (SQLException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}catch (Exception e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+							
+					
+			
+			
+				
 		return null;
 	}
 
