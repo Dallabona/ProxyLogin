@@ -47,20 +47,24 @@ public class MySqlContaDAO implements ContaDAO
 	@Override
 	public void deletarConta(Conta conta) throws DataProviderException
 	{		
-		Connection con;
+		Connection con = null;
+		PreparedStatement ps = null;
 			try
 			{
 				con = MySqlPoolSettings.getMYSQL().getPool().getConnection();
 				
-				PreparedStatement ps = con.prepareStatement(DELETAR);
+				ps = con.prepareStatement(DELETAR);
 				ps.setString(1, conta.getName());
 				ps.executeUpdate();
+				
 			}catch (Exception ex)
 			{
 				throw new DataProviderException("Mysql problem "+ex.getMessage());				
-			}		
-		
-		
+			}finally
+			{
+				fecharPreparedStatement(ps);
+				fecharConnexao(con);
+			}			
 	}
 
 	@Override
@@ -94,5 +98,16 @@ public class MySqlContaDAO implements ContaDAO
 				e.printStackTrace();
 			}
 	}
-
+	
+	private void fecharConnexao(Connection con)
+	{
+		if(con != null)
+			try
+			{
+				con.close();
+			}catch (SQLException e)
+			{				
+				e.printStackTrace();
+			}
+	}
 }
