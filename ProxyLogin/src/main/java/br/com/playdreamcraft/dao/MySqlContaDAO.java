@@ -14,10 +14,10 @@ import br.com.playdreamcraft.utils.MySqlPoolSettings;
 public class MySqlContaDAO implements ContaDAO
 {
 
-	public static final String DELETAR = "DELETE FROM accounts WHERE name = ?";
-	public static final String SELECIONAR = "SELECT * FROM accounts where name = ?";
+	public static final String		DELETAR		= "DELETE FROM accounts WHERE name = ?";
+	public static final String		SELECIONAR	= "SELECT * FROM accounts where name = ?";
 
-	private static MySqlContaDAO instance;
+	private static MySqlContaDAO	instance;
 
 	private MySqlContaDAO()
 	{
@@ -35,12 +35,13 @@ public class MySqlContaDAO implements ContaDAO
 	public void inserirConta(Conta conta)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public Conta getContaPorNome(String nome) throws AccountNotFoundException, DataProviderException
 	{
+		Conta contaRetorno = null;
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -50,12 +51,13 @@ public class MySqlContaDAO implements ContaDAO
 					con = MySqlPoolSettings.getMYSQL().getPool().getConnection();					
 
 					ps = con.prepareStatement(SELECIONAR);
-					ps.setString(1, nome);
+					ps.setString(1, nome.toLowerCase());
 					rs = ps.executeQuery();
 					
 					if(rs.next())
 					{
-						rs.get
+						rs.getString("password");
+						rs.getString("email");
 					}else
 					  throw new AccountNotFoundException();	
 				}catch (SQLException e)
@@ -66,45 +68,43 @@ public class MySqlContaDAO implements ContaDAO
 				{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
-							
+				}							
 					
-			
-			
+			if(contaRetorno == null)
+				throw new AccountNotFoundException();
 				
-		return null;
+		return contaRetorno;
 	}
 
 	@Override
 	public void deletarConta(Conta conta) throws DataProviderException
-	{		
+	{
 		Connection con = null;
 		PreparedStatement ps = null;
-			try
-			{
-				con = MySqlPoolSettings.getMYSQL().getPool().getConnection();
-				
-				ps = con.prepareStatement(DELETAR);
-				ps.setString(1, conta.getName());
-				ps.executeUpdate();
-				
-			}catch (Exception ex)
-			{
-				throw new DataProviderException("Mysql problem "+ex.getMessage());				
-			}finally
-			{
-				fecharPreparedStatement(ps);
-				fecharConnexao(con);
-			}			
+		try
+		{
+			con = MySqlPoolSettings.getMYSQL().getPool().getConnection();
+
+			ps = con.prepareStatement(DELETAR);
+			ps.setString(1, conta.getName().toLowerCase());
+			ps.executeUpdate();
+
+		}catch (Exception ex)
+		{
+			throw new DataProviderException("Mysql problem " + ex.getMessage());
+		}
+		finally
+		{
+			fecharPreparedStatement(ps);
+			fecharConnexao(con);
+		}
 	}
 
 	@Override
 	public void atualizarConta(Conta conta) throws AccountNotFoundException
 	{
-		
-		
-	}
 
+	}
 
 	private void fecharPreparedStatement(PreparedStatement ps)
 	{
@@ -113,11 +113,11 @@ public class MySqlContaDAO implements ContaDAO
 			{
 				ps.close();
 			}catch (SQLException e)
-			{				
+			{
 				e.printStackTrace();
 			}
 	}
-	
+
 	private void fecharResultset(ResultSet rs)
 	{
 		if(rs != null)
@@ -125,11 +125,11 @@ public class MySqlContaDAO implements ContaDAO
 			{
 				rs.close();
 			}catch (SQLException e)
-			{				
+			{
 				e.printStackTrace();
 			}
 	}
-	
+
 	private void fecharConnexao(Connection con)
 	{
 		if(con != null)
@@ -137,7 +137,7 @@ public class MySqlContaDAO implements ContaDAO
 			{
 				con.close();
 			}catch (SQLException e)
-			{				
+			{
 				e.printStackTrace();
 			}
 	}

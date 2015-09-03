@@ -27,3 +27,9 @@
      getContaPorNome()  ----> Conta cache 
      							TEM NO CACHE Não ----> 
      							Sim      
+     							
+     							
+     							
+     							
+     					accounts		
+     		ID | NAME | PASSWORD | EMAIL | LASTIP | LASTSEEN						
