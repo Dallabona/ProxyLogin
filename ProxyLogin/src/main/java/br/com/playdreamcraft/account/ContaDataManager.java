@@ -2,6 +2,7 @@ package br.com.playdreamcraft.account;
 
 import javax.security.auth.login.AccountNotFoundException;
 
+import br.com.playdreamcraft.backend.DataProviderException;
 import br.com.playdreamcraft.backend.PersistenceBackend;
 import br.com.playdreamcraft.cache.ContaCache;
 import br.com.playdreamcraft.dao.ContaDAO;
@@ -62,9 +63,29 @@ public class ContaDataManager implements ContaDAO
 	}
 
 	@Override
-	public void atualizarConta(Conta conta) throws AccountNotFoundException
+	public void atualizarConta(Conta conta) throws AccountNotFoundException, DataProviderException
 	{
-		contaDAOpersistence.atualizarConta(conta);		
+		String nomeConta = conta.getName();
+		Conta contaRollback = null; 
+		try
+		{
+			contaDAOpersistence.atualizarConta(conta);
+		}catch (DataProviderException e) //caso acontece algum erro em guardar uma conta
+		{
+			
+				contaRollback = contaDAOpersistence.getContaPorNome(nomeConta);
+			}catch (DataProviderException e1)
+			{
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}	
+		
+		if(contaRollback !=null)
+		{
+			contaDAOcache.deletarConta(conta);
+		}
 	}
 	
 	
