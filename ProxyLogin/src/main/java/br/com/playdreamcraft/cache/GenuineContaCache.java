@@ -35,60 +35,67 @@ public class GenuineContaCache implements ContaCache, ContaDAO
 		return instance;
 	}
 
-
 	@Override
 	public void inserirConta(Conta conta)
 	{
-		// TODO Auto-generated method stub
-		
+		if(!contas.contains(conta))
+			contas.add(conta);
 	}
 
 	@Override
-	public Conta getContaPorNome(String nome)  //se nao existir retornar null
+	public Conta getContaPorNome(String nome) // se nao existir retornar null
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Conta conta = null;
+
+		if(contas.contains(conta))
+		{
+			for(Conta contas : contas)
+			{
+				if(contas.getName().equalsIgnoreCase(nome))
+				{
+					conta = contas;
+					break;
+				}					
+			}
+		}
+		
+		return conta;
 	}
 
 	@Override
 	public void deletarConta(Conta conta) throws AccountNotFoundException
 	{
-		// TODO Auto-generated method stub
-		
+		if(contas.contains(conta))
+			contas.remove(conta);
 	}
 
 	@Override
 	public void atualizarTodasContas()
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void atualizarConta(Conta conta)
 	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void carregarConta(Conta conta)
-	{
-		// TODO Auto-generated method stub
-		
+		Conta contaAntiga = getContaPorNome(conta.getName());
+		if(contaAntiga != null)
+			contas.remove(contaAntiga);
+		contas.add(conta);
 	}
 
 	@Override
 	public void removerUmaConta(Conta conta)
 	{
-		// TODO Auto-generated method stub
-		
+		if(contas.contains(conta))
+			contas.remove(conta);
 	}
 
-
-
-	
-
-
+	@Override
+	public void removerTodasContas()
+	{
+		contas.clear();
+	}
 
 }

@@ -48,9 +48,8 @@ public class ContaDataManager implements ContaDAO
 		if(conta != null)
 			return conta;
 	
-		conta = contaDAOpersistence.getContaPorNome(nome);
-		ContaCache contaCache = (ContaCache) contaDAOcache;
-		contaCache.carregarConta(conta);
+		conta = contaDAOpersistence.getContaPorNome(nome);		
+		contaDAOcache.inserirConta(conta);
 		
 		return conta;
 	}
@@ -64,8 +63,7 @@ public class ContaDataManager implements ContaDAO
 
 	@Override
 	public void atualizarConta(Conta conta) throws AccountNotFoundException, DataProviderException
-	{
-		ContaCache cache = (ContaCache) contaDAOcache;
+	{		
 		String nomeConta = conta.getName();
 		Conta contaRollback = null; 
 		try
@@ -80,7 +78,7 @@ public class ContaDataManager implements ContaDAO
 		if(contaRollback != null)
 		{
 			contaDAOcache.deletarConta(conta);
-			cache.carregarConta(contaRollback);
+			contaDAOcache.inserirConta(contaRollback);
 		}
 	}
 	
