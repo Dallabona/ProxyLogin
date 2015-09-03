@@ -14,7 +14,7 @@ import br.com.playdreamcraft.utils.MySqlPoolSettings;
 public class MySqlContaDAO implements ContaDAO
 {
 
-	public static final String DELETAR = "DELETE FROM accounts where name = ?";
+	public static final String DELETAR = "DELETE FROM accounts WHERE name = ?";
 
 	private static MySqlContaDAO instance;
 
