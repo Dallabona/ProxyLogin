@@ -73,6 +73,10 @@ public class MySqlContaDAO implements ContaDAO
 		{
 			throw new DataProviderException("Mysql problem " + ex.getMessage());
 		}
+		
+		fecharConnexao(con);
+		fecharPreparedStatement(ps);
+		fecharResultset(rs);
 
 		return contaRetorno;
 	}
