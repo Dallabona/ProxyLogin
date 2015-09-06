@@ -178,9 +178,51 @@ public class MySqlContaDAO implements ContaDAO
 	}
 
 	@Override
-	public void atualizarConta(Conta conta) throws AccountNotFoundException
-	{
+	public void atualizarConta(Conta conta) throws AccountNotFoundException, DataProviderException
+	{		
+		String nome = conta.getName();		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 
+		try
+		{
+			con = MySqlPoolSettings.getMYSQL().getPool().getConnection();
+
+			ps = con.prepareStatement(SELECIONAR);
+			ps.setString(1, nome.toLowerCase());
+			rs = ps.executeQuery();
+
+			if(rs.next())
+			{
+				String password = rs.getString("password");
+				String email = rs.getString("email");
+				
+				if(!(conta.getPassword().equals(password))) //password need to update
+				{
+					
+				}
+				
+				if(!(conta.getEmail().equals(email))) //email need update
+				{
+					
+				}
+				
+			}else
+				throw new AccountNotFoundException();
+		}catch (SQLException sqle)
+		{
+			throw new DataProviderException("Mysql problem "
+					+ sqle.getMessage());
+		}catch (Exception ex)
+		{
+			throw new DataProviderException("Mysql problem " + ex.getMessage());
+		}finally
+		{
+			fecharConnexao(con);
+			fecharPreparedStatement(ps);
+			fecharResultset(rs);	
+		}
 	}
 
 	private void fecharPreparedStatement(PreparedStatement ps)
