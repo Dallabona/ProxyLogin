@@ -1,14 +1,23 @@
 package br.com.playdreamcraft.proxylogin.account;
 
+import java.util.concurrent.TimeUnit;
+
 import br.com.playdreamcraft.proxylogin.ProxyLogin;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class Conta
 {	
 	
+	public long getLastSeen()
+	{
+		return lastSeen;
+	}
+
 	private String name;
 	private String password;
 	private String email;
+	
+	private long lastSeen; // in minutes
 
 	private ProxiedPlayer proxiedPlayer;
 	private boolean logged;
@@ -19,6 +28,7 @@ public class Conta
 		this.email = email;
 		this.password = password;
 		this.name = name;		
+		lastSeen = TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis());
 	}
 	
 	public Conta(ProxiedPlayer pp, String email, String password)
@@ -26,6 +36,7 @@ public class Conta
 		name = pp.getName().toLowerCase();		
 		this.email = email;
 		proxiedPlayer = pp;
+		lastSeen = TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis());
 	}
 	
 	public String getPassword()
@@ -53,7 +64,7 @@ public class Conta
 		return email;
 	}
 
-	public ProxiedPlayer getProxyPlayer() 
+	public ProxiedPlayer getProxiedPlayer() 
 	{
 		return proxiedPlayer;
 	}	

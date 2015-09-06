@@ -3,7 +3,6 @@ package br.com.playdreamcraft.proxylogin.utils;
 import java.sql.SQLException;
 
 import br.com.playdreamcraft.proxylogin.ProxyLogin;
-import br.com.playdreamcraft.proxylogin.backend.PersistenceBackendSetup;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
