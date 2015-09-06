@@ -18,7 +18,10 @@ public class MySqlContaDAO implements ContaDAO
 	public static final String	DELETAR		= "DELETE FROM accounts WHERE name = ?";
 	public static final String	SELECIONAR	= "SELECT * FROM accounts where name = ?";
 	public static final String INSERIR = "INSERT into accounts (name, password, email, lastip, lastseen) VALUES (?,?,?)";
-	public static final String ATUALIZAR = "UPDATE accounts SET password = ?, email = ?, lastip = ?, lastseen = ? WHERE name = ? ";
+	public static final String ATUALIZAR_PASSWORD = "UPDATE accounts SET password = ? WHERE name = ? ";
+	public static final String ATUALIZAR_PASSWORD = "UPDATE accounts SET password = ?, email = ?, lastip = ?, lastseen = ? WHERE name = ? ";
+	public static final String ATUALIZAR_PASSWORD = "UPDATE accounts SET password = ?, email = ?, lastip = ?, lastseen = ? WHERE name = ? ";
+	public static final String ATUALIZAR_PASSWORD = "UPDATE accounts SET password = ?, email = ?, lastip = ?, lastseen = ? WHERE name = ? ";
 
 	private static MySqlContaDAO	instance;
 
@@ -184,6 +187,11 @@ public class MySqlContaDAO implements ContaDAO
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
+		boolean passwordUpdate = false;
+		boolean emailUpdate = false;
+		boolean lastIpUpdate = false;
+		boolean lastSeenUpdate = false;
+		
 
 		try
 		{
@@ -197,16 +205,14 @@ public class MySqlContaDAO implements ContaDAO
 			{
 				String password = rs.getString("password");
 				String email = rs.getString("email");
+				String lastip = rs.getString("lastip");
+				Long lastSeen = rs.getLong("lastseen");
 				
-				if(!(conta.getPassword().equals(password))) //password need to update
-				{
-					
-				}
+				passwordUpdate = !(conta.getPassword().equals(password)); //password need to update ?				
+				emailUpdate = !(conta.getEmail().equals(email));//email need to update ?
+				lastIpUpdate = !(conta.getProxiedPlayer().getAddress().getHostName().equals(lastip));
+				lastSeenUpdate = !(conta.getLastSeen() == lastSeen );
 				
-				if(!(conta.getEmail().equals(email))) //email need update
-				{
-					
-				}
 				
 			}else
 				throw new AccountNotFoundException();
