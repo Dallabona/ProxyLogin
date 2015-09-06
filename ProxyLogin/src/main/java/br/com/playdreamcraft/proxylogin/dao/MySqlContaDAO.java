@@ -203,16 +203,44 @@ public class MySqlContaDAO implements ContaDAO
 
 			if(rs.next())
 			{
+				int updateNumber = 0;
+				
 				String password = rs.getString("password");
 				String email = rs.getString("email");
 				String lastip = rs.getString("lastip");
 				Long lastSeen = rs.getLong("lastseen");
 				
-				passwordUpdate = !(conta.getPassword().equals(password)); //password need to update ?				
-				emailUpdate = !(conta.getEmail().equals(email));//email need to update ?
-				lastIpUpdate = !(conta.getProxiedPlayer().getAddress().getHostName().equals(lastip));
-				lastSeenUpdate = !(conta.getLastSeen() == lastSeen );
+				if(!(conta.getPassword().equals(password)))
+				{
+					passwordUpdate = true; //password need to update ?	
+					updateNumber++;
+				}
+				if(!(conta.getEmail().equals(email)))
+				{
+					emailUpdate = true;//email need to update ?
+					updateNumber++;
+				}
+				if(!(conta.getProxiedPlayer().getAddress().getHostName().equals(lastip)))
+				{
+					lastIpUpdate = true; //ip need to update ?
+					updateNumber++;
+				}
+				if(!(conta.getLastSeen() == lastSeen ))
+				{
+					lastSeenUpdate = true; //last seen need to update ?
+					updateNumber++;
+				}
 				
+				if(updateNumber == 1)
+				{
+					
+				}
+				if(updateNumber > 1)
+				{
+					
+				}
+				
+					
 				
 			}else
 				throw new AccountNotFoundException();
