@@ -17,7 +17,7 @@ public class MySqlContaDAO implements ContaDAO
 
 	public static final String	DELETAR		= "DELETE FROM accounts WHERE name = ?";
 	public static final String	SELECIONAR	= "SELECT * FROM accounts where name = ?";
-	public static final String INSERIR = "INSERT INTO accounts VALUES (?,?,?,?,?)";
+	public static final String INSERIR = "INSERT into accounts (time, name) VALUES (?,?,?)";
 	public static final String ATUALIZAR = "UPDATE accounts SET password = ?, email = ?, lastip = ?, lastseen = ? WHERE name = ? ";
 
 	private static MySqlContaDAO	instance;
@@ -46,7 +46,7 @@ public class MySqlContaDAO implements ContaDAO
 			con = MySqlPoolSettings.getMYSQL().getPool().getConnection();
 
 			ps = con.prepareStatement(INSERIR);
-			ps.setString(1, nome.toLowerCase());			
+			ps.setString(parameterIndex, x);;			
 						
 		
 		}catch (SQLException sqle)
