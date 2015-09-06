@@ -37,7 +37,31 @@ public class MySqlContaDAO implements ContaDAO
 	@Override
 	public void inserirConta(Conta conta)
 	{
-		// TODO Auto-generated method stub
+		Conta contaRetorno = null;
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		try
+		{
+			con = MySqlPoolSettings.getMYSQL().getPool().getConnection();
+
+			ps = con.prepareStatement(INSERIR);
+			ps.setString(1, nome.toLowerCase());			
+						
+		
+		}catch (SQLException sqle)
+		{
+			throw new DataProviderException("Mysql problem "
+					+ sqle.getMessage());
+		}catch (Exception ex)
+		{
+			throw new DataProviderException("Mysql problem " + ex.getMessage());
+		}finally
+		{
+			fecharConnexao(con);
+			fecharPreparedStatement(ps);				
+		}
+		
 
 	}
 
