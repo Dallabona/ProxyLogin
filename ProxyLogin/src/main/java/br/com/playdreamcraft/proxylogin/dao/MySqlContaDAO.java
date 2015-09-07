@@ -197,14 +197,13 @@ public class MySqlContaDAO implements ContaDAO
 	@Override
 	public void atualizarConta(Conta conta) throws AccountNotFoundException, DataProviderException
 	{		
-		String nome = conta.getName();		
-		Connection con = null;
+		String nome = conta.getName();			 
 		PreparedStatement ps = null;
 		ResultSet rs = null;		
 
-		try
+		try(Connection con = MySqlPoolSettings.getMYSQL().getPool().getConnection())
 		{
-			con = MySqlPoolSettings.getMYSQL().getPool().getConnection();
+			
 
 			ps = con.prepareStatement(SELECIONAR);
 			ps.setString(1, nome.toLowerCase());
@@ -231,7 +230,7 @@ public class MySqlContaDAO implements ContaDAO
 				if(!(conta.getLastSeen() == lastSeen ))
 					update.add(LAST_SEEN);//last seen need to update ?				
 				
-				String query;
+				String query = null;
 				
 				if(update.size() == 1)
 				{
@@ -285,10 +284,16 @@ public class MySqlContaDAO implements ContaDAO
 						}
 					}
 					sb.append(NAME_CONDITION);
+					update.clear();
+					query = sb.toString();
 				}
 				
+				if(query != null)
+				{
+					ps = con.prepareStatement(query);
 					
-				
+				}
+									
 			}else
 				throw new AccountNotFoundException();
 		}catch (SQLException sqle)
@@ -299,8 +304,7 @@ public class MySqlContaDAO implements ContaDAO
 		{
 			throw new DataProviderException("Mysql problem " + ex.getMessage());
 		}finally
-		{
-			fecharConnexao(con);
+		{			
 			fecharPreparedStatement(ps);
 			fecharResultset(rs);	
 		}
