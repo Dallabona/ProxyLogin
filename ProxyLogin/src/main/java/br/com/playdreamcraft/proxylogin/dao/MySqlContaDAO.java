@@ -20,17 +20,22 @@ public class MySqlContaDAO implements ContaDAO
 	private static final String	DELETAR		= "DELETE FROM accounts WHERE name = ?";
 	private static final String	SELECIONAR	= "SELECT * FROM accounts where name = ?";
 	private static final String INSERIR = "INSERT into accounts (name, password, email, lastip, lastseen) VALUES (?,?,?)";
-	private static final String ATUALIZAR_PASSWORD = "UPDATE accounts SET password = ? WHERE name = ? ";
-	private static final String ATUALIZAR_PASSWORD = "UPDATE accounts SET password = ?, email = ?, lastip = ?, lastseen = ? WHERE name = ? ";
-	private static final String ATUALIZAR_PASSWORD = "UPDATE accounts SET password = ?, email = ?, lastip = ?, lastseen = ? WHERE name = ? ";
-	private static final String ATUALIZAR_PASSWORD = "UPDATE accounts SET password = ?, email = ?, lastip = ?, lastseen = ? WHERE name = ? ";
+	
+	private static final String ATUALIZAR_PASSWORD = "UPDATE accounts SET password = ? WHERE name = ?";
+	private static final String ATUALIZAR_EMAIL = "UPDATE accounts SET email = ? WHERE name = ?";
+	private static final String ATUALIZAR_LASTSEEN = "UPDATE accounts SET lastseen = ? WHERE name = ?";
+	private static final String ATUALIZAR_LASTIP = "UPDATE accounts SET lastip = ? WHERE name = ?";
 	
 	private static final String NAME = "name";
 	private static final String PASSWORD = "password";
 	private static final String EMAIL = "email";
 	private static final String LAST_IP = "lastip";
 	private static final String LAST_SEEN = "lastseen";
-	private static final String SEPARATOR = ",";
+	
+	private static final String NAME_CONDITION = " WHERE name = ?";
+	private static final char SEPARADOR = ',';
+	private static final String INTERROGACAO = " = ?";
+	private static final char SPACE = ' ';
 
 	private static MySqlContaDAO	instance;
 
@@ -195,12 +200,7 @@ public class MySqlContaDAO implements ContaDAO
 		String nome = conta.getName();		
 		Connection con = null;
 		PreparedStatement ps = null;
-		ResultSet rs = null;
-		boolean passwordUpdate = false;
-		boolean emailUpdate = false;
-		boolean lastIpUpdate = false;
-		boolean lastSeenUpdate = false;
-		
+		ResultSet rs = null;		
 
 		try
 		{
@@ -220,39 +220,71 @@ public class MySqlContaDAO implements ContaDAO
 				Long lastSeen = rs.getLong(LAST_SEEN);
 				
 				if(!(conta.getPassword().equals(password)))
-				{
-					passwordUpdate = true; //password need to update ?	
-					update.add(PASSWORD);
-				}
-				if(!(conta.getEmail().equals(email)))
-				{
-					emailUpdate = true;//email need to update ?
-					update.add(EMAIL);
-				}
+					update.add(PASSWORD);//password need to update ?					
+				
+				if(!(conta.getEmail().equals(email)))				
+					update.add(EMAIL);//email need to update ?					
+				
 				if(!(conta.getProxiedPlayer().getAddress().getHostName().equals(lastip)))
-				{
-					lastIpUpdate = true; //ip need to update ?
-					update.add(LAST_IP);
-				}
+					update.add(LAST_IP);//ip need to update ?					
+				
 				if(!(conta.getLastSeen() == lastSeen ))
-				{
-					lastSeenUpdate = true; //last seen need to update ?
-					update.add(LAST_SEEN);
-				}
+					update.add(LAST_SEEN);//last seen need to update ?				
+				
+				String query;
 				
 				if(update.size() == 1)
 				{
 					for(String string : update)
 					{
-						
+						switch(string)
+						{
+							case PASSWORD:
+							{
+								query = ATUALIZAR_PASSWORD;
+								break;
+							}
+							
+							case EMAIL:
+							{
+								query = ATUALIZAR_EMAIL;
+								break;
+							}
+							
+							case LAST_IP:
+							{
+								query = ATUALIZAR_LASTIP;
+								break;
+							}
+							
+							case LAST_SEEN:
+							{
+								query = ATUALIZAR_LASTSEEN;
+								break;
+							}
+						}
+						break;
 					}
 				}
 				if(update.size() > 1)
 				{
+					StringBuilder sb = new StringBuilder("UPDATE accounts SET ");
+					boolean first = true;
 					for(String string : update)
 					{
-						
+						if(first)
+						{			
+						   sb.append(string);
+						   sb.append(INTERROGACAO); // UPDATE accounts SET name = ?, email = ?
+						   first = false;
+						}else{
+							sb.append(SEPARADOR);
+							sb.append(SPACE);
+							sb.append(string);
+							sb.append(INTERROGACAO);
+						}
 					}
+					sb.append(NAME_CONDITION);
 				}
 				
 					
