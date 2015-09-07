@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.security.auth.login.AccountNotFoundException;
 
@@ -15,13 +17,20 @@ import br.com.playdreamcraft.proxylogin.utils.MySqlPoolSettings;
 public class MySqlContaDAO implements ContaDAO
 {
 
-	public static final String	DELETAR		= "DELETE FROM accounts WHERE name = ?";
-	public static final String	SELECIONAR	= "SELECT * FROM accounts where name = ?";
-	public static final String INSERIR = "INSERT into accounts (name, password, email, lastip, lastseen) VALUES (?,?,?)";
-	public static final String ATUALIZAR_PASSWORD = "UPDATE accounts SET password = ? WHERE name = ? ";
-	public static final String ATUALIZAR_PASSWORD = "UPDATE accounts SET password = ?, email = ?, lastip = ?, lastseen = ? WHERE name = ? ";
-	public static final String ATUALIZAR_PASSWORD = "UPDATE accounts SET password = ?, email = ?, lastip = ?, lastseen = ? WHERE name = ? ";
-	public static final String ATUALIZAR_PASSWORD = "UPDATE accounts SET password = ?, email = ?, lastip = ?, lastseen = ? WHERE name = ? ";
+	private static final String	DELETAR		= "DELETE FROM accounts WHERE name = ?";
+	private static final String	SELECIONAR	= "SELECT * FROM accounts where name = ?";
+	private static final String INSERIR = "INSERT into accounts (name, password, email, lastip, lastseen) VALUES (?,?,?)";
+	private static final String ATUALIZAR_PASSWORD = "UPDATE accounts SET password = ? WHERE name = ? ";
+	private static final String ATUALIZAR_PASSWORD = "UPDATE accounts SET password = ?, email = ?, lastip = ?, lastseen = ? WHERE name = ? ";
+	private static final String ATUALIZAR_PASSWORD = "UPDATE accounts SET password = ?, email = ?, lastip = ?, lastseen = ? WHERE name = ? ";
+	private static final String ATUALIZAR_PASSWORD = "UPDATE accounts SET password = ?, email = ?, lastip = ?, lastseen = ? WHERE name = ? ";
+	
+	private static final String NAME = "name";
+	private static final String PASSWORD = "password";
+	private static final String EMAIL = "email";
+	private static final String LAST_IP = "lastip";
+	private static final String LAST_SEEN = "lastseen";
+	private static final String SEPARATOR = ",";
 
 	private static MySqlContaDAO	instance;
 
@@ -90,8 +99,8 @@ public class MySqlContaDAO implements ContaDAO
 
 			if(rs.next())
 			{
-				String password = rs.getString("password");
-				String email = rs.getString("email");
+				String password = rs.getString(PASSWORD);
+				String email = rs.getString(EMAIL);
 				contaRetorno = new Conta(nome, email, password);
 			}else
 				throw new AccountNotFoundException();
@@ -134,8 +143,8 @@ public class MySqlContaDAO implements ContaDAO
 
 			if(rs.next())
 			{
-				String password = rs.getString("password");
-				String email = rs.getString("email");
+				String password = rs.getString(PASSWORD);
+				String email = rs.getString(EMAIL);
 				contaRetorno = new Conta(pp, email, password);
 			}else
 				throw new AccountNotFoundException();
@@ -203,41 +212,47 @@ public class MySqlContaDAO implements ContaDAO
 
 			if(rs.next())
 			{
-				int updateNumber = 0;
+				Set<String> update = new HashSet<>();
 				
-				String password = rs.getString("password");
-				String email = rs.getString("email");
-				String lastip = rs.getString("lastip");
-				Long lastSeen = rs.getLong("lastseen");
+				String password = rs.getString(PASSWORD);
+				String email = rs.getString(EMAIL);
+				String lastip = rs.getString(LAST_IP);
+				Long lastSeen = rs.getLong(LAST_SEEN);
 				
 				if(!(conta.getPassword().equals(password)))
 				{
 					passwordUpdate = true; //password need to update ?	
-					updateNumber++;
+					update.add(PASSWORD);
 				}
 				if(!(conta.getEmail().equals(email)))
 				{
 					emailUpdate = true;//email need to update ?
-					updateNumber++;
+					update.add(EMAIL);
 				}
 				if(!(conta.getProxiedPlayer().getAddress().getHostName().equals(lastip)))
 				{
 					lastIpUpdate = true; //ip need to update ?
-					updateNumber++;
+					update.add(LAST_IP);
 				}
 				if(!(conta.getLastSeen() == lastSeen ))
 				{
 					lastSeenUpdate = true; //last seen need to update ?
-					updateNumber++;
+					update.add(LAST_SEEN);
 				}
 				
-				if(updateNumber == 1)
+				if(update.size() == 1)
 				{
-					
+					for(String string : update)
+					{
+						
+					}
 				}
-				if(updateNumber > 1)
+				if(update.size() > 1)
 				{
-					
+					for(String string : update)
+					{
+						
+					}
 				}
 				
 					
