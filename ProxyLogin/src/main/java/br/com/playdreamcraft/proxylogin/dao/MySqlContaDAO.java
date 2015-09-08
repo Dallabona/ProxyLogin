@@ -17,22 +17,22 @@ import br.com.playdreamcraft.proxylogin.utils.MySqlPoolSettings;
 public class MySqlContaDAO implements ContaDAO
 {
 
-	private static final String	DELETAR		= "DELETE FROM accounts WHERE name = ?";
-	private static final String	SELECIONAR	= "SELECT * FROM accounts where name = ?";
-	private static final String INSERIR = "INSERT into accounts (name, password, email, lastip, lastseen) VALUES (?,?,?)";
+	private static final String	DELETAR		= "DELETE FROM accounts WHERE username = ?";
+	private static final String	SELECIONAR	= "SELECT * FROM accounts where username = ?";
+	private static final String INSERIR = "INSERT into accounts (username, password, email, ip, lastlogin) VALUES (?,?,?)";
 	
-	private static final String ATUALIZAR_PASSWORD = "UPDATE accounts SET password = ? WHERE name = ?";
-	private static final String ATUALIZAR_EMAIL = "UPDATE accounts SET email = ? WHERE name = ?";
-	private static final String ATUALIZAR_LASTSEEN = "UPDATE accounts SET lastseen = ? WHERE name = ?";
-	private static final String ATUALIZAR_LASTIP = "UPDATE accounts SET lastip = ? WHERE name = ?";
+	private static final String ATUALIZAR_PASSWORD = "UPDATE accounts SET password = ? WHERE username = ?";
+	private static final String ATUALIZAR_EMAIL = "UPDATE accounts SET email = ? WHERE username = ?";
+	private static final String ATUALIZAR_LASTSEEN = "UPDATE accounts SET lastlogin = ? WHERE username = ?";
+	private static final String ATUALIZAR_LASTIP = "UPDATE accounts SET ip = ? WHERE username = ?";
 	
-	private static final String NAME = "name";
+	private static final String NAME = "username";
 	private static final String PASSWORD = "password";
 	private static final String EMAIL = "email";
-	private static final String LAST_IP = "lastip";
-	private static final String LAST_SEEN = "lastseen";
+	private static final String LAST_IP = "ip";
+	private static final String LAST_SEEN = "lastlogin";
 	
-	private static final String NAME_CONDITION = " WHERE name = ?";
+	private static final String NAME_CONDITION = " WHERE username = ?";
 	private static final char SEPARADOR = ',';
 	private static final String INTERROGACAO = " = ?";
 	private static final char SPACE = ' ';
