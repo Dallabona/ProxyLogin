@@ -12,8 +12,8 @@ public class HashSHA256Test
 		HashSHA256 hash = new HashSHA256();
 		
 		// System.out.println(hash.gerarHash("aa", "123"));
-System.out.println(hash.senhaCorreta("as"
-, "aa"));
+		System.out.println(hash.senhaCorreta("as"
+		, "aa"));
 	}
 
 }

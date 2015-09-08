@@ -7,13 +7,32 @@ import java.security.NoSuchAlgorithmException;
 public class HashSHA256 implements PasswordHash
 {
 
+	private static HashSHA256	instance;
+
+	private HashSHA256()
+	{
+	}
+
+	public static HashSHA256 getInstance()
+	{
+		if(null == instance)
+			instance = new HashSHA256();
+
+		return instance;
+	}
+
 	/**
 	 * Retorna a hash passando um salt e a string
 	 */
 	public String gerarHash(String senha, String salt)
 			throws NoSuchAlgorithmException
 	{
-		return "$SHA$" + salt + "$" + digerirSHA256(new StringBuilder(String.valueOf(digerirSHA256(senha))).append(salt).toString());
+		return "$SHA$"
+				+ salt
+				+ "$"
+				+ digerirSHA256(new StringBuilder(
+						String.valueOf(digerirSHA256(senha))).append(salt)
+						.toString());
 	}
 
 	/**
@@ -27,8 +46,10 @@ public class HashSHA256 implements PasswordHash
 	}
 
 	/**
-	 * Método que digeri uma string 
-	 * @param message string a ser digerida
+	 * Método que digeri uma string
+	 * 
+	 * @param message
+	 *            string a ser digerida
 	 * @return o hash digerido
 	 * @throws NoSuchAlgorithmException
 	 */
