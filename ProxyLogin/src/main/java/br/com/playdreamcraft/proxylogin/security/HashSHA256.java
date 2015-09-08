@@ -1,20 +1,45 @@
 package br.com.playdreamcraft.proxylogin.security;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class HashSHA256 implements PasswordHash
 {
 
-	@Override
+	/**
+	 * Retorna a hash passando um salt e a string
+	 */
 	public String gerarHash(String senha, String salt)
+			throws NoSuchAlgorithmException
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return "$SHA$" + salt + "$" + digerirSHA256(new StringBuilder(String.valueOf(digerirSHA256(senha))).append(salt).toString());
 	}
 
-	@Override
-	public boolean senhaCorreta(String senha, String salt)
+	/**
+	 * Testa se a senha está correta
+	 */
+	public boolean senhaCorreta(String hash, String senha)
+			throws NoSuchAlgorithmException
 	{
-		// TODO Auto-generated method stub
-		return false;
+		String[] partes = hash.split("\\$");
+		return hash.equals(gerarHash(senha, partes[2]));
 	}
 
+	/**
+	 * Método que digeri uma string 
+	 * @param message string a ser digerida
+	 * @return o hash digerido
+	 * @throws NoSuchAlgorithmException
+	 */
+	private static String digerirSHA256(String message)
+			throws NoSuchAlgorithmException
+	{
+		MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
+		sha256.reset();
+		sha256.update(message.getBytes());
+		byte[] digest = sha256.digest();
+		return String.format("%0" + (digest.length << 1) + "x",
+				new Object[] { new BigInteger(1, digest) });
+	}
 }
