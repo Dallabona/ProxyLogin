@@ -16,7 +16,6 @@ import br.com.playdreamcraft.proxylogin.utils.MySqlPoolSettings;
 
 public class MySqlContaDAO implements ContaDAO
 {
-
 	private static final String		DELETAR				= "DELETE FROM accounts WHERE username = ?";
 	private static final String		SELECIONAR			= "SELECT * FROM accounts where username = ?";
 	private static final String		INSERIR				= "INSERT into accounts (username, password, email, ip, lastlogin) VALUES (?,?,?)";
