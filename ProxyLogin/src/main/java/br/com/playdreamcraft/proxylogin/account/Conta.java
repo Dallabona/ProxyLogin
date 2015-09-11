@@ -14,7 +14,7 @@ public class Conta
 	}
 
 	private String name;
-	private String password;
+	private String hash;
 	private String email;
 	
 	private long lastSeen; // in minutes
@@ -24,9 +24,10 @@ public class Conta
 	
 	public Conta(String name, String email, String password)
 	{
-		this.proxiedPlayer = ProxyLogin.getInstance().getProxy().getPlayer(name);			
+		//TODO DISABLED JUST FOR TEST
+		//this.proxiedPlayer = ProxyLogin.getInstance().getProxy().getPlayer(name);			
 		this.email = email;
-		this.password = password;
+		this.hash = password;
 		this.name = name;		
 		lastSeen = TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis());
 	}
@@ -39,9 +40,9 @@ public class Conta
 		lastSeen = TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis());
 	}
 	
-	public String getPassword()
+	public String getHash()
 	{
-		return password;
+		return hash;
 	}
 
 	public String getName()

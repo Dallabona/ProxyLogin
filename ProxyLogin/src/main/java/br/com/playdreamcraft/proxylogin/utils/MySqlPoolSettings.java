@@ -40,7 +40,9 @@ public class MySqlPoolSettings
 		this.mysqlPort = mysqlPort;
 		this.mysqlDatabase = mysqlDatabase;
 		this.mysqlUsername = mysqlUsername;
-		this.mysqlPassword = mysqlPassword;
+		this.mysqlPassword = mysqlPassword;	
+		
+		setupHikari();
 	}
 	
 	/**
@@ -54,7 +56,7 @@ public class MySqlPoolSettings
 	public static void setupMysql(String mysqlIp, int mysqlPort, String mysqlDatabase, String mysqlUsername, String mysqlPassword)
 	{
 		if(mysql == null)
-		{
+		{			
 			mysql = new MySqlPoolSettings(mysqlIp, mysqlPort, mysqlDatabase, mysqlUsername, mysqlPassword);
 		}
 	}	
@@ -76,6 +78,7 @@ public class MySqlPoolSettings
 		config.addDataSourceProperty("cachePrepStmts", "true");
 		config.addDataSourceProperty("prepStmtCacheSize", "250");
 		config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+		config.setDriverClassName("com.mysql.jdbc.Driver");
 		MySqlPoolSettings.hikari = new  HikariDataSource(config);
 	}
 	
@@ -84,7 +87,7 @@ public class MySqlPoolSettings
 	 * @return Retorna uma instancia da classe Mysql
 	 * @throws SQLException Lança essa exceção quando 
 	 */
-	public static MySqlPoolSettings getMYSQL() throws Exception
+	public static MySqlPoolSettings getMYSQL() throws SQLException
 	{
 		if(mysql == null)
 		{

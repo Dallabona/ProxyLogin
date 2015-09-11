@@ -4,8 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
 
 import javax.security.auth.login.AccountNotFoundException;
 
@@ -16,21 +15,24 @@ import br.com.playdreamcraft.proxylogin.utils.MySqlPoolSettings;
 
 public class MySqlContaDAO implements ContaDAO
 {
-	private static final String		DELETAR				= "DELETE FROM accounts WHERE username = ?";
-	private static final String		SELECIONAR			= "SELECT * FROM accounts where username = ?";
-	private static final String		INSERIR				= "INSERT into accounts (username, password, email, ip, lastlogin) VALUES (?,?,?)";
+	private static final String TABLE = "authme";
+	
+	private static final String		DELETAR				= "DELETE FROM "+TABLE+" WHERE username = ?";
+	private static final String		SELECIONAR			= "SELECT * FROM "+TABLE+" where username = ?";
+	private static final String		INSERIR				= "INSERT into "+TABLE+" (username, password, email, ip, lastlogin) VALUES (?,?,?,?,?)";
 
-	private static final String		ATUALIZAR_PASSWORD	= "UPDATE accounts SET password = ? WHERE username = ?";
-	private static final String		ATUALIZAR_EMAIL		= "UPDATE accounts SET email = ? WHERE username = ?";
-	private static final String		ATUALIZAR_LASTSEEN	= "UPDATE accounts SET lastlogin = ? WHERE username = ?";
-	private static final String		ATUALIZAR_LASTIP	= "UPDATE accounts SET ip = ? WHERE username = ?";
+	private static final String		ATUALIZAR_PASSWORD	= "UPDATE "+TABLE+" SET password = ? WHERE username = ?";
+	private static final String		ATUALIZAR_EMAIL		= "UPDATE "+TABLE+" SET email = ? WHERE username = ?";
+	private static final String		ATUALIZAR_LASTSEEN	= "UPDATE "+TABLE+" SET lastlogin = ? WHERE username = ?";
+	private static final String		ATUALIZAR_LASTIP	= "UPDATE "+TABLE+" SET ip = ? WHERE username = ?";
 
 	@SuppressWarnings("unused")
 	private static final String		NAME				= "username";
 	private static final String		PASSWORD			= "password";
 	private static final String		EMAIL				= "email";
 	private static final String		LAST_IP				= "ip";
-	private static final String		LAST_SEEN			= "lastlogin";
+	private static final String		LAST_SEEN			= "lastlogin";	
+
 
 	private static final String		NAME_CONDITION		= " WHERE username = ?";
 	private static final char		SEPARADOR			= ',';
@@ -63,18 +65,15 @@ public class MySqlContaDAO implements ContaDAO
 
 			ps = con.prepareStatement(INSERIR);
 			ps.setString(1, conta.getName().toLowerCase());
-			ps.setString(2, conta.getPassword());
+			ps.setString(2, conta.getHash());
 			ps.setString(3, conta.getEmail());
-			ps.setString(4, conta.getProxiedPlayer().getAddress().getHostName());
+			ps.setString(4, "192.168.1.1");//ps.setString(4, conta.getProxiedPlayer().getAddress().getHostName());//TODO ARRUMAR QUANDO TIVER PRONTO
 			ps.setLong(5, conta.getLastSeen());
-
+			ps.executeUpdate();
 		}catch (SQLException sqle)
 		{
 			throw new DataProviderException("Mysql problem "
 					+ sqle.getMessage());
-		}catch (Exception ex)
-		{
-			throw new DataProviderException("Mysql problem " + ex.getMessage());
 		}
 		finally
 		{
@@ -94,27 +93,22 @@ public class MySqlContaDAO implements ContaDAO
 		ResultSet rs = null;
 
 		try
-		{
-			con = MySqlPoolSettings.getMYSQL().getPool().getConnection();
-
-			ps = con.prepareStatement(SELECIONAR);
-			ps.setString(1, nome.toLowerCase());
-			rs = ps.executeQuery();
-
+		{			
+			con = MySqlPoolSettings.getMYSQL().getPool().getConnection();		
+			ps = con.prepareStatement(SELECIONAR);		
+		    ps.setString(1, nome.toLowerCase());	
+			rs = ps.executeQuery();		
 			if(rs.next())
-			{
-				String password = rs.getString(PASSWORD);
-				String email = rs.getString(EMAIL);
-				contaRetorno = new Conta(nome, email, password);
+			{				
+				String password = rs.getString(PASSWORD);			
+				String email = rs.getString(EMAIL);				
+				contaRetorno = new Conta(nome, email, password);			
 			}else
 				throw new AccountNotFoundException();
 		}catch (SQLException sqle)
 		{
 			throw new DataProviderException("Mysql problem "
 					+ sqle.getMessage());
-		}catch (Exception ex)
-		{
-			throw new DataProviderException("Mysql problem " + ex.getMessage());
 		}
 		finally
 		{
@@ -155,9 +149,6 @@ public class MySqlContaDAO implements ContaDAO
 		{
 			throw new DataProviderException("Mysql problem "
 					+ sqle.getMessage());
-		}catch (Exception ex)
-		{
-			throw new DataProviderException("Mysql problem " + ex.getMessage());
 		}
 		finally
 		{
@@ -182,9 +173,9 @@ public class MySqlContaDAO implements ContaDAO
 			ps.setString(1, conta.getName().toLowerCase());
 			ps.executeUpdate();
 
-		}catch (Exception ex)
-		{
-			throw new DataProviderException("Mysql problem " + ex.getMessage());
+		}catch (SQLException sqle)
+		{			throw new DataProviderException("Mysql problem "
+					+ sqle.getMessage());
 		}
 		finally
 		{
@@ -201,6 +192,8 @@ public class MySqlContaDAO implements ContaDAO
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		String query = null;
+		ArrayList<String> update;
+		
 		try (Connection con = MySqlPoolSettings.getMYSQL().getPool()
 				.getConnection())
 		{
@@ -213,22 +206,22 @@ public class MySqlContaDAO implements ContaDAO
 
 				if(rs.next())
 				{
-					Set<String> update = new HashSet<>();
+					update = new ArrayList<>();
 
 					String password = rs.getString(PASSWORD);
 					String email = rs.getString(EMAIL);
 					String lastip = rs.getString(LAST_IP);
 					Long lastSeen = rs.getLong(LAST_SEEN);
 
-					if(!(conta.getPassword().equals(password)))
+					if(!(conta.getHash().equals(password)))
 						update.add(PASSWORD);// password need to update ?
 
 					if(!(conta.getEmail().equals(email)))
 						update.add(EMAIL);// email need to update ?
 
-					if(!(conta.getProxiedPlayer().getAddress().getHostName()
+				/*	if(!(conta.getProxiedPlayer().getAddress().getHostName() 
 							.equals(lastip)))
-						update.add(LAST_IP);// ip need to update ?
+						update.add(LAST_IP);// ip need to update ?*/
 
 					if(!(conta.getLastSeen() == lastSeen))
 						update.add(LAST_SEEN);// last seen need to update ?
@@ -265,10 +258,10 @@ public class MySqlContaDAO implements ContaDAO
 					if(update.size() > 1)
 					{
 						StringBuilder sb = new StringBuilder(
-								"UPDATE accounts SET ");
+								"UPDATE "+TABLE+" SET ");
 						boolean first = true;
 						for(String string : update)
-						{
+						{							
 							if(first)
 							{
 								sb.append(string);
@@ -284,9 +277,8 @@ public class MySqlContaDAO implements ContaDAO
 								sb.append(INTERROGACAO);
 							}
 						}
-						sb.append(NAME_CONDITION);
-						update.clear();
-						query = sb.toString();
+						sb.append(NAME_CONDITION);						
+						query = sb.toString();								
 					}
 
 				}else
@@ -295,10 +287,6 @@ public class MySqlContaDAO implements ContaDAO
 			{
 				throw new DataProviderException("Mysql problem "
 						+ sqle.getMessage());
-			}catch (Exception ex)
-			{
-				throw new DataProviderException("Mysql problem "
-						+ ex.getMessage());
 			}
 			finally
 			{
@@ -308,9 +296,47 @@ public class MySqlContaDAO implements ContaDAO
 
 			try
 			{
-				if(query != null)
-				{
+				if(query != null && update != null )
+				{					
 					ps = con.prepareStatement(query);
+		
+					for(int i = 0 ; i < update.size() ; i++)
+					{
+						switch (update.get(i))
+						{
+							case NAME:
+							{
+								ps.setString(i+1, conta.getName());
+								break;
+							}							
+							case PASSWORD:
+							{
+								ps.setString(i+1, conta.getHash());
+								break;
+							}	
+							
+							case EMAIL:
+							{
+								ps.setString(i+1, conta.getEmail());
+								break;
+							}
+							
+							case LAST_SEEN:
+							{
+								ps.setLong(i+1, conta.getLastSeen());
+								break;
+							}
+							case LAST_IP:
+							{
+								ps.setString(i+1, conta.getHash()); //TODO
+								break;
+							}
+							default:
+								break;
+						}						
+					}	
+					
+					ps.setString(update.size()+1, conta.getName());
 					ps.executeUpdate();
 
 				}
@@ -318,14 +344,10 @@ public class MySqlContaDAO implements ContaDAO
 			{
 				throw new DataProviderException("Mysql problem "
 						+ sqle.getMessage());
-			}catch (Exception ex)
-			{
-				throw new DataProviderException("Mysql problem "
-						+ ex.getMessage());
-
 			}
 			finally
 			{
+				update.clear();
 				fecharResultset(rs);
 			}
 
@@ -333,9 +355,6 @@ public class MySqlContaDAO implements ContaDAO
 		{
 			throw new DataProviderException("Mysql problem "
 					+ sqle.getMessage());
-		}catch (Exception ex)
-		{
-			throw new DataProviderException("Mysql problem " + ex.getMessage());
 		}
 
 	}

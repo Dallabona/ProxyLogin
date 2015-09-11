@@ -1,6 +1,5 @@
 package br.com.playdreamcraft.proxylogin;
 
-import br.com.playdreamcraft.proxylogin.utils.MySqlPoolSettings;
 import net.md_5.bungee.api.plugin.Plugin;
 
 /**
