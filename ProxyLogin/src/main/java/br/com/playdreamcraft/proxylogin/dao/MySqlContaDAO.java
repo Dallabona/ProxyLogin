@@ -17,25 +17,26 @@ import br.com.playdreamcraft.proxylogin.utils.MySqlPoolSettings;
 public class MySqlContaDAO implements ContaDAO
 {
 
-	private static final String	DELETAR		= "DELETE FROM accounts WHERE username = ?";
-	private static final String	SELECIONAR	= "SELECT * FROM accounts where username = ?";
-	private static final String INSERIR = "INSERT into accounts (username, password, email, ip, lastlogin) VALUES (?,?,?)";
-	
-	private static final String ATUALIZAR_PASSWORD = "UPDATE accounts SET password = ? WHERE username = ?";
-	private static final String ATUALIZAR_EMAIL = "UPDATE accounts SET email = ? WHERE username = ?";
-	private static final String ATUALIZAR_LASTSEEN = "UPDATE accounts SET lastlogin = ? WHERE username = ?";
-	private static final String ATUALIZAR_LASTIP = "UPDATE accounts SET ip = ? WHERE username = ?";
-	
-	private static final String NAME = "username";
-	private static final String PASSWORD = "password";
-	private static final String EMAIL = "email";
-	private static final String LAST_IP = "ip";
-	private static final String LAST_SEEN = "lastlogin";
-	
-	private static final String NAME_CONDITION = " WHERE username = ?";
-	private static final char SEPARADOR = ',';
-	private static final String INTERROGACAO = " = ?";
-	private static final char SPACE = ' ';
+	private static final String		DELETAR				= "DELETE FROM accounts WHERE username = ?";
+	private static final String		SELECIONAR			= "SELECT * FROM accounts where username = ?";
+	private static final String		INSERIR				= "INSERT into accounts (username, password, email, ip, lastlogin) VALUES (?,?,?)";
+
+	private static final String		ATUALIZAR_PASSWORD	= "UPDATE accounts SET password = ? WHERE username = ?";
+	private static final String		ATUALIZAR_EMAIL		= "UPDATE accounts SET email = ? WHERE username = ?";
+	private static final String		ATUALIZAR_LASTSEEN	= "UPDATE accounts SET lastlogin = ? WHERE username = ?";
+	private static final String		ATUALIZAR_LASTIP	= "UPDATE accounts SET ip = ? WHERE username = ?";
+
+	@SuppressWarnings("unused")
+	private static final String		NAME				= "username";
+	private static final String		PASSWORD			= "password";
+	private static final String		EMAIL				= "email";
+	private static final String		LAST_IP				= "ip";
+	private static final String		LAST_SEEN			= "lastlogin";
+
+	private static final String		NAME_CONDITION		= " WHERE username = ?";
+	private static final char		SEPARADOR			= ',';
+	private static final String		INTERROGACAO		= " = ?";
+	private static final char		SPACE				= ' ';
 
 	private static MySqlContaDAO	instance;
 
@@ -53,10 +54,10 @@ public class MySqlContaDAO implements ContaDAO
 
 	@Override
 	public void inserirConta(Conta conta) throws DataProviderException
-	{		
+	{
 		Connection con = null;
 		PreparedStatement ps = null;
-		
+
 		try
 		{
 			con = MySqlPoolSettings.getMYSQL().getPool().getConnection();
@@ -67,8 +68,7 @@ public class MySqlContaDAO implements ContaDAO
 			ps.setString(3, conta.getEmail());
 			ps.setString(4, conta.getProxiedPlayer().getAddress().getHostName());
 			ps.setLong(5, conta.getLastSeen());
-						
-		
+
 		}catch (SQLException sqle)
 		{
 			throw new DataProviderException("Mysql problem "
@@ -76,12 +76,12 @@ public class MySqlContaDAO implements ContaDAO
 		}catch (Exception ex)
 		{
 			throw new DataProviderException("Mysql problem " + ex.getMessage());
-		}finally
+		}
+		finally
 		{
 			fecharConnexao(con);
-			fecharPreparedStatement(ps);				
+			fecharPreparedStatement(ps);
 		}
-		
 
 	}
 
@@ -116,14 +116,13 @@ public class MySqlContaDAO implements ContaDAO
 		}catch (Exception ex)
 		{
 			throw new DataProviderException("Mysql problem " + ex.getMessage());
-		}finally
+		}
+		finally
 		{
 			fecharConnexao(con);
 			fecharPreparedStatement(ps);
-			fecharResultset(rs);	
+			fecharResultset(rs);
 		}
-		
-		
 
 		return contaRetorno;
 	}
@@ -133,7 +132,7 @@ public class MySqlContaDAO implements ContaDAO
 			throws AccountNotFoundException, DataProviderException
 	{
 		Conta contaRetorno = null;
-		String nome = pp.getName();		
+		String nome = pp.getName();
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -160,11 +159,12 @@ public class MySqlContaDAO implements ContaDAO
 		}catch (Exception ex)
 		{
 			throw new DataProviderException("Mysql problem " + ex.getMessage());
-		}finally
+		}
+		finally
 		{
 			fecharConnexao(con);
 			fecharPreparedStatement(ps);
-			fecharResultset(rs);	
+			fecharResultset(rs);
 		}
 
 		return contaRetorno;
@@ -195,107 +195,141 @@ public class MySqlContaDAO implements ContaDAO
 	}
 
 	@Override
-	public void atualizarConta(Conta conta) throws AccountNotFoundException, DataProviderException
-	{		
-		String nome = conta.getName();			 
+	public void atualizarConta(Conta conta) throws AccountNotFoundException,
+			DataProviderException
+	{
+		String nome = conta.getName();
 		PreparedStatement ps = null;
-		ResultSet rs = null;		
-
-		try(Connection con = MySqlPoolSettings.getMYSQL().getPool().getConnection())
+		ResultSet rs = null;
+		String query = null;
+		try (Connection con = MySqlPoolSettings.getMYSQL().getPool()
+				.getConnection())
 		{
-			
-
-			ps = con.prepareStatement(SELECIONAR);
-			ps.setString(1, nome.toLowerCase());
-			rs = ps.executeQuery();
-
-			if(rs.next())
+			try
 			{
-				Set<String> update = new HashSet<>();
-				
-				String password = rs.getString(PASSWORD);
-				String email = rs.getString(EMAIL);
-				String lastip = rs.getString(LAST_IP);
-				Long lastSeen = rs.getLong(LAST_SEEN);
-				
-				if(!(conta.getPassword().equals(password)))
-					update.add(PASSWORD);//password need to update ?					
-				
-				if(!(conta.getEmail().equals(email)))				
-					update.add(EMAIL);//email need to update ?					
-				
-				if(!(conta.getProxiedPlayer().getAddress().getHostName().equals(lastip)))
-					update.add(LAST_IP);//ip need to update ?					
-				
-				if(!(conta.getLastSeen() == lastSeen ))
-					update.add(LAST_SEEN);//last seen need to update ?				
-				
-				String query = null;
-				
-				if(update.size() == 1)
+
+				ps = con.prepareStatement(SELECIONAR);
+				ps.setString(1, nome.toLowerCase());
+				rs = ps.executeQuery();
+
+				if(rs.next())
 				{
-					for(String string : update)
+					Set<String> update = new HashSet<>();
+
+					String password = rs.getString(PASSWORD);
+					String email = rs.getString(EMAIL);
+					String lastip = rs.getString(LAST_IP);
+					Long lastSeen = rs.getLong(LAST_SEEN);
+
+					if(!(conta.getPassword().equals(password)))
+						update.add(PASSWORD);// password need to update ?
+
+					if(!(conta.getEmail().equals(email)))
+						update.add(EMAIL);// email need to update ?
+
+					if(!(conta.getProxiedPlayer().getAddress().getHostName()
+							.equals(lastip)))
+						update.add(LAST_IP);// ip need to update ?
+
+					if(!(conta.getLastSeen() == lastSeen))
+						update.add(LAST_SEEN);// last seen need to update ?
+
+					if(update.size() == 1)
 					{
-						switch(string)
+						for(String string : update)
 						{
-							case PASSWORD:
+							switch (string)
 							{
-								query = ATUALIZAR_PASSWORD;
-								break;
+								case PASSWORD:{
+									query = ATUALIZAR_PASSWORD;
+									break;
+								}
+
+								case EMAIL:{
+									query = ATUALIZAR_EMAIL;
+									break;
+								}
+
+								case LAST_IP:{
+									query = ATUALIZAR_LASTIP;
+									break;
+								}
+
+								case LAST_SEEN:{
+									query = ATUALIZAR_LASTSEEN;
+									break;
+								}
 							}
-							
-							case EMAIL:
-							{
-								query = ATUALIZAR_EMAIL;
-								break;
-							}
-							
-							case LAST_IP:
-							{
-								query = ATUALIZAR_LASTIP;
-								break;
-							}
-							
-							case LAST_SEEN:
-							{
-								query = ATUALIZAR_LASTSEEN;
-								break;
-							}
+							break;
 						}
-						break;
 					}
-				}
-				if(update.size() > 1)
-				{
-					StringBuilder sb = new StringBuilder("UPDATE accounts SET ");
-					boolean first = true;
-					for(String string : update)
+					if(update.size() > 1)
 					{
-						if(first)
-						{			
-						   sb.append(string);
-						   sb.append(INTERROGACAO); // UPDATE accounts SET name = ?, email = ?
-						   first = false;
-						}else{
-							sb.append(SEPARADOR);
-							sb.append(SPACE);
-							sb.append(string);
-							sb.append(INTERROGACAO);
+						StringBuilder sb = new StringBuilder(
+								"UPDATE accounts SET ");
+						boolean first = true;
+						for(String string : update)
+						{
+							if(first)
+							{
+								sb.append(string);
+								sb.append(INTERROGACAO); // UPDATE accounts SET
+															// name = ?, email =
+															// ?
+								first = false;
+							}else
+							{
+								sb.append(SEPARADOR);
+								sb.append(SPACE);
+								sb.append(string);
+								sb.append(INTERROGACAO);
+							}
 						}
+						sb.append(NAME_CONDITION);
+						update.clear();
+						query = sb.toString();
 					}
-					sb.append(NAME_CONDITION);
-					update.clear();
-					query = sb.toString();
-				}
-				
+
+				}else
+					throw new AccountNotFoundException();
+			}catch (SQLException sqle)
+			{
+				throw new DataProviderException("Mysql problem "
+						+ sqle.getMessage());
+			}catch (Exception ex)
+			{
+				throw new DataProviderException("Mysql problem "
+						+ ex.getMessage());
+			}
+			finally
+			{
+				fecharPreparedStatement(ps);
+				fecharResultset(rs);
+			}
+
+			try
+			{
 				if(query != null)
 				{
 					ps = con.prepareStatement(query);
-					
+					ps.executeUpdate();
+
 				}
-									
-			}else
-				throw new AccountNotFoundException();
+			}catch (SQLException sqle)
+			{
+				throw new DataProviderException("Mysql problem "
+						+ sqle.getMessage());
+			}catch (Exception ex)
+			{
+				throw new DataProviderException("Mysql problem "
+						+ ex.getMessage());
+
+			}
+			finally
+			{
+				fecharResultset(rs);
+			}
+
 		}catch (SQLException sqle)
 		{
 			throw new DataProviderException("Mysql problem "
@@ -303,11 +337,8 @@ public class MySqlContaDAO implements ContaDAO
 		}catch (Exception ex)
 		{
 			throw new DataProviderException("Mysql problem " + ex.getMessage());
-		}finally
-		{			
-			fecharPreparedStatement(ps);
-			fecharResultset(rs);	
 		}
+
 	}
 
 	private void fecharPreparedStatement(PreparedStatement ps)

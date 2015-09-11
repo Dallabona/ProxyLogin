@@ -102,13 +102,6 @@ public class MySqlPoolSettings
 		return hikari;
 	}
 
-	/**
-	 * Faz setup do backend
-	 */
-	@Override
-	public void setupBackend()
-	{
-				
-	}
+
 	
 }

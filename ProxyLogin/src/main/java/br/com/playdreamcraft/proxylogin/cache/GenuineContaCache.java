@@ -51,11 +51,11 @@ public class GenuineContaCache implements ContaCache, ContaDAO
 
 		if(contas.contains(conta))
 		{
-			for(Conta contas : contas)
+			for(Conta contaLoop : contas)
 			{
-				if(contas.getName().equalsIgnoreCase(nome))
+				if(contaLoop.getName().equalsIgnoreCase(nome))
 				{
-					conta = contas;
+					conta = contaLoop;
 					break;
 				}					
 			}
