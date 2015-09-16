@@ -1,4 +1,4 @@
-package br.com.playdreamcraft.proxylogin.security.passwords;
+package br.com.playdreamcraft.proxylogin.security.passwords.hash;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -24,7 +24,7 @@ public class HashSHA256 implements PasswordHash
 	/**
 	 * Retorna a hash passando um salt e a string
 	 */
-	public String gerarHash(String senha, String salt)
+	public String generateHash(String senha, String salt)
 			throws NoSuchAlgorithmException
 	{
 		return "$SHA$"
@@ -42,15 +42,15 @@ public class HashSHA256 implements PasswordHash
 			throws NoSuchAlgorithmException
 	{
 		String[] partes = hash.split("\\$");
-		return hash.equals(gerarHash(senha, partes[2]));
+		return hash.equals(generateHash(senha, partes[2]));
 	}
 
 	/**
-	 * Método que digeri uma string
+	 * Digest and string
 	 * 
-	 * @param message
-	 *            string a ser digerida
-	 * @return o hash digerido
+	 * @param message string to be digested
+	 *            
+	 * @return the hash
 	 * @throws NoSuchAlgorithmException
 	 */
 	private static String digerirSHA256(String message)

@@ -2,7 +2,7 @@ package br.com.playdreacraft.proxylogin.tests;
 
 import java.security.NoSuchAlgorithmException;
 
-import br.com.playdreamcraft.proxylogin.security.passwords.HashSHA256;
+import br.com.playdreamcraft.proxylogin.security.passwords.hash.HashSHA256;
 
 public class HashSHA256Test
 {

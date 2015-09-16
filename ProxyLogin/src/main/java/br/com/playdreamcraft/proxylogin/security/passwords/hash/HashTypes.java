@@ -1,4 +1,4 @@
-package br.com.playdreamcraft.proxylogin.security.passwords;
+package br.com.playdreamcraft.proxylogin.security.passwords.hash;
 
 public enum HashTypes
 {
