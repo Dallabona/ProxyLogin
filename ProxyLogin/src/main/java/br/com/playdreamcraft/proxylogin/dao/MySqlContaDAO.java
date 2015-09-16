@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import javax.security.auth.login.AccountNotFoundException;
 
 import net.md_5.bungee.api.connection.ProxiedPlayer;
-import br.com.playdreamcraft.proxylogin.account.Conta;
+import br.com.playdreamcraft.proxylogin.account.Account;
 import br.com.playdreamcraft.proxylogin.backend.DataProviderException;
 import br.com.playdreamcraft.proxylogin.utils.MySqlPoolSettings;
 
-public class MySqlContaDAO implements ContaDAO
+public class MySqlContaDAO implements AccountDAO
 {
 	private static final String TABLE = "authme";
 	
@@ -54,7 +54,7 @@ public class MySqlContaDAO implements ContaDAO
 	}
 
 	@Override
-	public void inserirConta(Conta conta) throws DataProviderException
+	public void inserirConta(Account conta) throws DataProviderException
 	{
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -84,10 +84,10 @@ public class MySqlContaDAO implements ContaDAO
 	}
 
 	@Override
-	public Conta getContaPorNome(String nome) throws AccountNotFoundException,
+	public Account getContaPorNome(String nome) throws AccountNotFoundException,
 			DataProviderException
 	{
-		Conta contaRetorno = null;
+		Account contaRetorno = null;
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -102,7 +102,7 @@ public class MySqlContaDAO implements ContaDAO
 			{				
 				String password = rs.getString(PASSWORD);			
 				String email = rs.getString(EMAIL);				
-				contaRetorno = new Conta(nome, email, password);			
+				contaRetorno = new Account(nome, email, password);			
 			}else
 				throw new AccountNotFoundException();
 		}catch (SQLException sqle)
@@ -121,10 +121,10 @@ public class MySqlContaDAO implements ContaDAO
 	}
 
 	@Override
-	public Conta getContaPorProxiedPlayer(ProxiedPlayer pp)
+	public Account getContaPorProxiedPlayer(ProxiedPlayer pp)
 			throws AccountNotFoundException, DataProviderException
 	{
-		Conta contaRetorno = null;
+		Account contaRetorno = null;
 		String nome = pp.getName();
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -142,7 +142,7 @@ public class MySqlContaDAO implements ContaDAO
 			{
 				String password = rs.getString(PASSWORD);
 				String email = rs.getString(EMAIL);
-				contaRetorno = new Conta(pp, email, password);
+				contaRetorno = new Account(pp, email, password);
 			}else
 				throw new AccountNotFoundException();
 		}catch (SQLException sqle)
@@ -161,7 +161,7 @@ public class MySqlContaDAO implements ContaDAO
 	}
 
 	@Override
-	public void deletarConta(Conta conta) throws DataProviderException
+	public void deletarConta(Account conta) throws DataProviderException
 	{
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -185,7 +185,7 @@ public class MySqlContaDAO implements ContaDAO
 	}
 
 	@Override
-	public void atualizarConta(Conta conta) throws AccountNotFoundException,
+	public void atualizarConta(Account conta) throws AccountNotFoundException,
 			DataProviderException
 	{
 		String nome = conta.getName();

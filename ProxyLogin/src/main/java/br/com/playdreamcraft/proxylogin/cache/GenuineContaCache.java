@@ -7,9 +7,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.security.auth.login.AccountNotFoundException;
 
 import net.md_5.bungee.api.connection.ProxiedPlayer;
-import br.com.playdreamcraft.proxylogin.account.Conta;
+import br.com.playdreamcraft.proxylogin.account.Account;
 import br.com.playdreamcraft.proxylogin.backend.DataProviderException;
-import br.com.playdreamcraft.proxylogin.dao.ContaDAO;
+import br.com.playdreamcraft.proxylogin.dao.AccountDAO;
 
 /**
  * Cache de contas
@@ -17,10 +17,10 @@ import br.com.playdreamcraft.proxylogin.dao.ContaDAO;
  * @author _LucasD
  *
  */
-public class GenuineContaCache implements ContaCache, ContaDAO
+public class GenuineContaCache implements ContaCache, AccountDAO
 {
-	private ContaDAO contaDAO;
-	private static Set<Conta> contas = Collections.newSetFromMap(new ConcurrentHashMap<Conta,Boolean>());
+	private AccountDAO contaDAO;
+	private static Set<Account> contas = Collections.newSetFromMap(new ConcurrentHashMap<Account,Boolean>());
 	private static GenuineContaCache contaCache;
 
 	private static GenuineContaCache instance;
@@ -38,20 +38,20 @@ public class GenuineContaCache implements ContaCache, ContaDAO
 	}
 
 	@Override
-	public void inserirConta(Conta conta)
+	public void inserirConta(Account conta)
 	{
 		if(!contas.contains(conta))
 			contas.add(conta);
 	}
 
 	@Override
-	public Conta getContaPorNome(String nome) // se nao existir retornar null
+	public Account getContaPorNome(String nome) // se nao existir retornar null
 	{
-		Conta conta = null;
+		Account conta = null;
 
 		if(contas.contains(conta))
 		{
-			for(Conta contaLoop : contas)
+			for(Account contaLoop : contas)
 			{
 				if(contaLoop.getName().equalsIgnoreCase(nome))
 				{
@@ -65,14 +65,14 @@ public class GenuineContaCache implements ContaCache, ContaDAO
 	}
 	
 	@Override
-	public Conta getContaPorProxiedPlayer(ProxiedPlayer pp)
+	public Account getContaPorProxiedPlayer(ProxiedPlayer pp)
 			throws AccountNotFoundException, DataProviderException
 	{		
 		return getContaPorNome(pp.getName());
 	}
 
 	@Override
-	public void deletarConta(Conta conta) throws AccountNotFoundException
+	public void deletarConta(Account conta) throws AccountNotFoundException
 	{
 		if(contas.contains(conta))
 			contas.remove(conta);
@@ -86,16 +86,16 @@ public class GenuineContaCache implements ContaCache, ContaDAO
 	}
 
 	@Override
-	public void atualizarConta(Conta conta)
+	public void atualizarConta(Account conta)
 	{
-		Conta contaAntiga = getContaPorNome(conta.getName());
+		Account contaAntiga = getContaPorNome(conta.getName());
 		if(contaAntiga != null)
 			contas.remove(contaAntiga);
 		contas.add(conta);
 	}
 
 	@Override
-	public void removerUmaConta(Conta conta)
+	public void removerUmaConta(Account conta)
 	{
 		if(contas.contains(conta))
 			contas.remove(conta);

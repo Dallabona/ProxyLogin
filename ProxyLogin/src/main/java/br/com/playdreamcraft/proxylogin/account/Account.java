@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 import br.com.playdreamcraft.proxylogin.ProxyLogin;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
-public class Conta
+public class Account
 {	
 	
 	public long getLastSeen()
@@ -22,7 +22,7 @@ public class Conta
 	private ProxiedPlayer proxiedPlayer;
 	private boolean logged;
 	
-	public Conta(String name, String email, String password)
+	public Account(String name, String email, String password)
 	{
 		//TODO DISABLED JUST FOR TEST
 		//this.proxiedPlayer = ProxyLogin.getInstance().getProxy().getPlayer(name);			
@@ -32,7 +32,7 @@ public class Conta
 		lastSeen = TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis());
 	}
 	
-	public Conta(ProxiedPlayer pp, String email, String password)
+	public Account(ProxiedPlayer pp, String email, String password)
 	{
 		name = pp.getName().toLowerCase();		
 		this.email = email;

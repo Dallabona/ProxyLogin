@@ -1,4 +1,4 @@
-package br.com.playdreamcraft.proxylogin.security;
+package br.com.playdreamcraft.proxylogin.security.passwords;
 
 import java.security.NoSuchAlgorithmException;
 

@@ -71,10 +71,10 @@ public class MySqlPoolSettings
 		config.setJdbcUrl("jdbc:mysql://"+mysqlIp+":"+mysqlPort+"/"+mysqlDatabase);
 		config.setUsername(mysqlUsername);
 		config.setPassword(mysqlPassword);
-		config.setAutoCommit(true);
+		config.setAutoCommit(true);		
 		config.setConnectionTimeout(10000);
 		config.setIdleTimeout(1800000);
-		config.setMaximumPoolSize(17);
+		config.setMaximumPoolSize(10);
 		config.addDataSourceProperty("cachePrepStmts", "true");
 		config.addDataSourceProperty("prepStmtCacheSize", "250");
 		config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");

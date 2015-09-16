@@ -6,17 +6,17 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import br.com.playdreamcraft.proxylogin.backend.DataProviderException;
 import br.com.playdreamcraft.proxylogin.backend.PersistenceBackend;
 import br.com.playdreamcraft.proxylogin.cache.ContaCache;
-import br.com.playdreamcraft.proxylogin.dao.ContaDAO;
+import br.com.playdreamcraft.proxylogin.dao.AccountDAO;
 import br.com.playdreamcraft.proxylogin.factory.DAOFactory;
 
-public class ContaDataManager implements ContaDAO
+public class AccountDataManager implements AccountDAO
 {
 
-	ContaDAO contaDAOcache;
-	ContaDAO contaDAOpersistence;
-	private static ContaDataManager singleton;
+	AccountDAO contaDAOcache;
+	AccountDAO contaDAOpersistence;
+	private static AccountDataManager singleton;
 	
-	private ContaDataManager(ContaDAO contaDAOcache, ContaDAO contaDAOpersistence)
+	private AccountDataManager(AccountDAO contaDAOcache, AccountDAO contaDAOpersistence)
 	{
 		if(!(contaDAOcache instanceof ContaCache) || !(contaDAOpersistence instanceof PersistenceBackend))
 			throw new RuntimeException("Algum problema ocorreu, provavelmente com o cache ou com a persistencia de dados");
@@ -25,25 +25,25 @@ public class ContaDataManager implements ContaDAO
 		this.contaDAOpersistence = contaDAOpersistence;
 	}
 	
-	public static ContaDataManager getInstance()
+	public static AccountDataManager getInstance()
 	{
 		if(singleton == null)
-			singleton = new ContaDataManager(DAOFactory.getCacheContaDAO(), DAOFactory.getPersistenceContaDAO());
+			singleton = new AccountDataManager(DAOFactory.getCacheContaDAO(), DAOFactory.getPersistenceContaDAO());
 		
 		return singleton;
 	}
 	
 	@Override
-	public void inserirConta(Conta conta) throws DataProviderException 
+	public void inserirConta(Account conta) throws DataProviderException 
 	{		
 		contaDAOpersistence.inserirConta(conta);		
 		contaDAOcache.inserirConta(conta);		
 	}
 
 	@Override
-	public Conta getContaPorNome(String nome) throws AccountNotFoundException, DataProviderException
+	public Account getContaPorNome(String nome) throws AccountNotFoundException, DataProviderException
 	{
-		Conta conta;
+		Account conta;
 		
 		conta = contaDAOcache.getContaPorNome(nome);
 		if(conta != null)
@@ -56,7 +56,7 @@ public class ContaDataManager implements ContaDAO
 	}
 	
 	@Override
-	public Conta getContaPorProxiedPlayer(ProxiedPlayer pp)
+	public Account getContaPorProxiedPlayer(ProxiedPlayer pp)
 			throws AccountNotFoundException, DataProviderException
 	{
 		// TODO Auto-generated method stub
@@ -64,17 +64,17 @@ public class ContaDataManager implements ContaDAO
 	}
 
 	@Override
-	public void deletarConta(Conta conta) throws AccountNotFoundException, DataProviderException
+	public void deletarConta(Account conta) throws AccountNotFoundException, DataProviderException
 	{				
 		 contaDAOpersistence.deletarConta(conta);		
 		 contaDAOcache.deletarConta(conta);
 	}
 
 	@Override
-	public void atualizarConta(Conta conta) throws AccountNotFoundException, DataProviderException
+	public void atualizarConta(Account conta) throws AccountNotFoundException, DataProviderException
 	{		
 		String nomeConta = conta.getName();
-		Conta contaRollback = null; 
+		Account contaRollback = null; 
 		try
 		{
 			contaDAOpersistence.atualizarConta(conta);
