@@ -12,8 +12,8 @@ import br.com.playdreamcraft.proxylogin.factory.DAOFactory;
 public class AccountDataManager implements AccountDAO
 {
 
-	AccountDAO contaDAOcache;
-	AccountDAO contaDAOpersistence;
+	private static AccountDAO contaDAOcache;
+	private static AccountDAO contaDAOpersistence;
 	private static AccountDataManager singleton;
 	
 	private AccountDataManager(AccountDAO contaDAOcache, AccountDAO contaDAOpersistence)
@@ -21,8 +21,8 @@ public class AccountDataManager implements AccountDAO
 		if(!(contaDAOcache instanceof ContaCache) || !(contaDAOpersistence instanceof PersistenceBackend))
 			throw new RuntimeException("Algum problema ocorreu, provavelmente com o cache ou com a persistencia de dados");
 		
-		this.contaDAOcache = contaDAOcache;
-		this.contaDAOpersistence = contaDAOpersistence;
+		AccountDataManager.contaDAOcache = contaDAOcache;
+		AccountDataManager.contaDAOpersistence = contaDAOpersistence;
 	}
 	
 	public static AccountDataManager getInstance()

@@ -3,11 +3,12 @@ package br.com.playdreamcraft.proxylogin.account;
 import java.util.concurrent.TimeUnit;
 
 import br.com.playdreamcraft.proxylogin.ProxyLogin;
+import br.com.playdreamcraft.proxylogin.backend.DataProviderException;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class Account
 {	
-	
+		
 	public long getLastSeen()
 	{
 		return lastSeen;
@@ -69,5 +70,22 @@ public class Account
 	{
 		return proxiedPlayer;
 	}	
+	
+	public void registrar()
+	{
+		try
+		{
+			AccountDataManager.getInstance().inserirConta(this);
+		}catch (DataProviderException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void logar()
+	{
+		
+	}
 		
 }
