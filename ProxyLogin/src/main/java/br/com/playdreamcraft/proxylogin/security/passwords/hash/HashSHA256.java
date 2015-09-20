@@ -4,6 +4,12 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * An implementation of a PasswordHash
+ * @see PasswordHash
+ * @author PalitoDeDente
+ *
+ */
 public class HashSHA256 implements PasswordHash
 {
 
@@ -22,7 +28,7 @@ public class HashSHA256 implements PasswordHash
 	}
 
 	/**
-	 * Retorna a hash passando um salt e a string
+	 * @see PasswordHash
 	 */
 	public String generateHash(String senha, String salt)
 			throws NoSuchAlgorithmException
@@ -30,19 +36,19 @@ public class HashSHA256 implements PasswordHash
 		return "$SHA$"
 				+ salt
 				+ "$"
-				+ digerirSHA256(new StringBuilder(
-						String.valueOf(digerirSHA256(senha))).append(salt)
+				+ digestSHA256(new StringBuilder(
+						String.valueOf(digestSHA256(senha))).append(salt)
 						.toString());
 	}
 
 	/**
-	 * Testa se a senha está correta
+	 * @see PasswordHash
 	 */
-	public boolean senhaCorreta(String hash, String senha)
+	public boolean isCorrect(String hash, String password)
 			throws NoSuchAlgorithmException
 	{
-		String[] partes = hash.split("\\$");
-		return hash.equals(generateHash(senha, partes[2]));
+		String[] parts = hash.split("\\$");
+		return hash.equals(generateHash(password, parts[2]));
 	}
 
 	/**
@@ -53,7 +59,7 @@ public class HashSHA256 implements PasswordHash
 	 * @return the hash
 	 * @throws NoSuchAlgorithmException
 	 */
-	private static String digerirSHA256(String message)
+	private static String digestSHA256(String message)
 			throws NoSuchAlgorithmException
 	{
 		MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
